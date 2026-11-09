@@ -6,7 +6,7 @@
 
 P0 core is a receive-only CCD sniffer on the Prowler's J1962 diagnostic connector. The first board needs the CCD differential front end, ESP32-S3, USB/Wi-Fi interface, and protected power. Other DLC physical layers, J1962 pass-through operation, and active request/reply capture are stretch goals. The capture schema keeps a `thread` field so those can be added later without changing stored records. The first web UI can show the CCD thread; per-thread tabs and a combined timeline become useful when stretch channels exist. No transmit path is populated in the P0 assembly.
 
-The ChryslerScanner V2.1.0 pin table is a useful candidate inventory: pin 2 PCI/VPW; pins 3/11 CCD+/-; pins 6, 7, 9, 12, 14, 15 SCI; pins 4/5 grounds; pin 16 battery. These are **reference-derived candidates**, not verified Prowler wiring facts. The 1999 Prowler service information and physical DLC inspection take precedence. Pins not verified as data remain disconnected from signal circuitry.
+The ChryslerScanner V2.1.0 pin table is a useful candidate inventory: pin 2 PCI/VPW; pins 3/11 CCD+/-; pins 6, 7, 9, 12, 14, 15 SCI; pins 4/5 grounds; pin 16 battery. These are **reference-derived candidates**, not verified Prowler wiring facts. Elvira is a 2000 Prowler. Use the archived 1999 factory information as a working carryover reference, then vet critical details against the owner's paper 2000 manual and physical DLC before connection. Pins not verified as data remain disconnected from signal circuitry.
 
 ## Candidate channel matrix
 
@@ -75,7 +75,7 @@ The V2.1.0 schematic describes separate CCD, PCI/VPW, and SCI circuits and makes
 
 ## Required implementation before purchase/fab
 
-1. Verify the CCD contact mapping and electrical limits on the 1999 Prowler in OEM service documents. Pin 4 chassis ground and pin 5 signal ground remain separately identified.
+1. Develop the CCD contact map and electrical limits from the archived 1999 factory manual, recording its page references and the assumed carryover to Elvira (2000). Vet critical details against the paper 2000 manual as needed for design decisions. Pin 4 chassis ground and pin 5 signal ground remain separately identified.
 2. Select actual connector and obtain its full pin-layout drawing/STEP; create and inspect its custom footprint against the physical part. The current 88 x 38 mm carrier and generic pigtail header are not the final board.
 3. Design and validate the CCD differential receiver first, including protection, input impedance, switching threshold, hysteresis, polarity, logic output and test points.
 4. Build the receive-only P0 core and validate it with an isolated signal source and current-limited supply; measure bus loading and timing before vehicle connection.

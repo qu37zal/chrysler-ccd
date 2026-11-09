@@ -1,9 +1,21 @@
 {
   "schema_version": 1,
-  "provenance": "candidate-map-from-ChryslerScanner-V2.1.0-not-yet-verified-on-1999-Prowler",
+  "provenance": "candidate-map-from-ChryslerScanner-V2.1.0-not-yet-verified-on-2000-Prowler",
   "scope": {
-    "p0_core": ["ccd"],
-    "stretch": ["vpw_2", "sci_6_pcm_rx", "sci_7_tx", "sci_9_tcm_rx", "sci_12_pcm_rx", "sci_14_tcm_rx", "sci_15_tcm_tx", "diagnostic_request_reply", "j1962_passthrough"],
+    "p0_core": [
+      "ccd"
+    ],
+    "stretch": [
+      "vpw_2",
+      "sci_6_pcm_rx",
+      "sci_7_tx",
+      "sci_9_tcm_rx",
+      "sci_12_pcm_rx",
+      "sci_14_tcm_rx",
+      "sci_15_tcm_tx",
+      "diagnostic_request_reply",
+      "j1962_passthrough"
+    ],
     "active_request_reply_in_p0": false
   },
   "threads": [
@@ -11,7 +23,10 @@
       "id": "ccd",
       "label": "CCD",
       "phase": "p0_core",
-      "dlc_contacts": [3, 11],
+      "dlc_contacts": [
+        3,
+        11
+      ],
       "candidate_signal": "differential pair",
       "receive_frontend": "ccd_differential",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -21,7 +36,9 @@
       "id": "vpw_2",
       "label": "PCI / VPW",
       "phase": "stretch",
-      "dlc_contacts": [2],
+      "dlc_contacts": [
+        2
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "vpw_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -31,7 +48,9 @@
       "id": "sci_6_pcm_rx",
       "label": "SCI pin 6 / PCM RX",
       "phase": "stretch",
-      "dlc_contacts": [6],
+      "dlc_contacts": [
+        6
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -41,7 +60,9 @@
       "id": "sci_7_tx",
       "label": "SCI pin 7 / TX",
       "phase": "stretch",
-      "dlc_contacts": [7],
+      "dlc_contacts": [
+        7
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -51,7 +72,9 @@
       "id": "sci_9_tcm_rx",
       "label": "SCI pin 9 / TCM RX",
       "phase": "stretch",
-      "dlc_contacts": [9],
+      "dlc_contacts": [
+        9
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -61,7 +84,9 @@
       "id": "sci_12_pcm_rx",
       "label": "SCI pin 12 / PCM RX",
       "phase": "stretch",
-      "dlc_contacts": [12],
+      "dlc_contacts": [
+        12
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -71,7 +96,9 @@
       "id": "sci_14_tcm_rx",
       "label": "SCI pin 14 / TCM RX",
       "phase": "stretch",
-      "dlc_contacts": [14],
+      "dlc_contacts": [
+        14
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -81,7 +108,9 @@
       "id": "sci_15_tcm_tx",
       "label": "SCI pin 15 / TCM TX",
       "phase": "stretch",
-      "dlc_contacts": [15],
+      "dlc_contacts": [
+        15
+      ],
       "candidate_signal": "single wire",
       "receive_frontend": "sci_single_wire",
       "confidence": "medium-reference-pin-map; low-Prowler-population",
@@ -93,5 +122,15 @@
     "combined_timeline": true,
     "raw_capture_includes_all_threads": true,
     "filtering_is_presentation_only": true
+  },
+  "vehicle": {
+    "name": "Elvira",
+    "model_year": 2000,
+    "model": "Plymouth Prowler",
+    "working_manual_years": [
+      1997,
+      1999
+    ],
+    "critical_verification_manual": "Owner paper 2000 factory service manual"
   }
 }

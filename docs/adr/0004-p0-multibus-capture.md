@@ -24,4 +24,4 @@ One CCD receiver cannot capture single-wire PCI/VPW or SCI signaling. Preserving
 
 - ChryslerScanner V2.1.0 schematic's connector table assigns candidate CCD, PCI/VPW and SCI contacts; the project is GPL-3.0 and is used as a source of pin-map clues only.
 - Macchina CCBDM20 manufacturer drawing describes a board-mount right-angle male J1962 connector, 16 contacts, dimensions in millimeters, and 30 V maximum rating. The exact connector footprint must be checked against the physical part before PCB release.
-- Neither source proves the 1999 Prowler's complete DLC population. OEM service information and physical measurement remain required.
+- Neither source proves the 2000 Prowler's complete DLC population. OEM service information and physical measurement remain required.
