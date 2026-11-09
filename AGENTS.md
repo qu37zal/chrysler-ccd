@@ -24,6 +24,7 @@
 - LTspice 26.1.1 is installed at `C:\Program Files\ADI\LTspice\LTspice.exe`; KiCad supplies ngspice 46. Check installed tools before reinstalling. Manufacturer models may work in only one simulator: the LM5164-Q1 fixture regulates in LTspice but failed in ngspice. A completed solver run is not a passing test; require every expected measurement and its limits.
 - Current CCD subsystem source: `hardware/tools/build_ccd_frontend.py`, generating native KiCad files and bench BOM exports. Reconcile direct KiCad edits before regenerating. Run the exported-netlist comparison and ERC after changes. The old carrier is superseded; the front-end sheet is not a complete protected board.
 - Do not clamp CCD inputs to local positive supply rails without evaluating the unpowered tap. An open transmit-power jumper must be modeled as floating with actual bleeds/leakage, not forcibly grounded. Vendor SPICE models do not establish worst-case leakage, destructive-transient survival, or component qualification.
+- Native Git fetch/push works on this workstation with `git -c http.sslBackend=openssl ...`. Schannel previously returned `SEC_E_NO_CREDENTIALS`; try this command-scoped backend before falling back to per-file GitHub API commits. Keep certificate verification enabled. Local and GitHub histories were reconciled on 2026-11-09; use native Git to preserve a coherent history going forward.
 
 ## Vehicle year and manual authority
 
