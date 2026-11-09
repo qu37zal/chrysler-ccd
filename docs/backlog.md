@@ -1,6 +1,6 @@
 # Prioritized backlog
 
-1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for DLC, radio connector, BCM and speed-sensitive selector; capture page references and license/access terms.
+1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for every DLC cavity, radio connector, BCM and speed-sensitive selector; determine whether separate SCI/other diagnostic signals are populated and record each layer/pin. Capture page references and license/access terms.
 2. **P0 blocker:** Inspect parts-bin inventory and select a 3.3 V receive-only CCD front end with verified input protection and loading. Decide between a comparator circuit and documented transceiver board after checking component availability; do not order obsolete CDP68HC68S1E as the default.
 3. **P0 blocker:** Audit upstream repositories at exact commit hashes; record licenses, protocol assumptions and reusable algorithms. Resolve project license before reuse.
 4. **P0 blocker:** Design a protected automotive power input and physically transmit-inhibited receiver; verify no TX, bus bias, or termination connection to vehicle.
@@ -10,7 +10,7 @@
 8. **P0:** Implement local Wi-Fi AP, authenticated/configurable browser interface, live counters and downloadable capture format; no cloud dependency.
 9. **P0:** Mechanically define enclosure and OBD J1962 male/female pass-through semantics, pin continuity and strain relief before CAD/printing.
 10. **P0:** Implement stationary event annotation and deterministic capture correlation report; preserve full provenance.
-11. **P0:** First genuine Prowler capture only after steps 1–6; use passive receiver at confirmed DLC pins 3/11, stationary vehicle, no scan-tool transmission.
+11. **P0:** First genuine Prowler capture only after steps 1–6; use passive receiver(s) on verified DLC pins, stationary vehicle, no scan-tool transmission.
 12. **P0:** Verify vehicle speed, steering controls, selector and lighting/reverse associations with repeated controlled stationary or safe offline captures.
 13. **Later:** Bluetooth and native iOS app, after P0 capture integrity and local web UX are established.
 14. **Bench emulation:** Establish isolated virtual CCD bus and OEM radio request/response/periodic behavior; review before any transmitter implementation.
