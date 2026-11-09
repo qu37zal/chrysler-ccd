@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "provenance": "candidate-map-from-ChryslerScanner-V2.1.0-not-yet-verified-on-1999-Prowler",
+  "threads": [
+    {
+      "id": "ccd",
+      "label": "CCD",
+      "dlc_contacts": [3, 11],
+      "candidate_signal": "differential pair",
+      "receive_frontend": "ccd_differential",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "vpw_2",
+      "label": "PCI / VPW",
+      "dlc_contacts": [2],
+      "candidate_signal": "single wire",
+      "receive_frontend": "vpw_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_6_pcm_rx",
+      "label": "SCI pin 6 / PCM RX",
+      "dlc_contacts": [6],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_7_tx",
+      "label": "SCI pin 7 / TX",
+      "dlc_contacts": [7],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_9_tcm_rx",
+      "label": "SCI pin 9 / TCM RX",
+      "dlc_contacts": [9],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_12_pcm_rx",
+      "label": "SCI pin 12 / PCM RX",
+      "dlc_contacts": [12],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_14_tcm_rx",
+      "label": "SCI pin 14 / TCM RX",
+      "dlc_contacts": [14],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    },
+    {
+      "id": "sci_15_tcm_tx",
+      "label": "SCI pin 15 / TCM TX",
+      "dlc_contacts": [15],
+      "candidate_signal": "single wire",
+      "receive_frontend": "sci_single_wire",
+      "confidence": "medium-reference-pin-map; low-Prowler-population",
+      "implemented": false
+    }
+  ],
+  "ui": {
+    "tabs_from_thread_list": true,
+    "combined_timeline": true,
+    "raw_capture_includes_all_threads": true,
+    "filtering_is_presentation_only": true
+  }
+}

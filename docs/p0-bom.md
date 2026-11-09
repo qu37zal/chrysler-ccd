@@ -1,54 +1,85 @@
-# P0 preliminary BOM and packaging concept
+# P0 multi-protocol DLC sniffer: preliminary BOM and channel plan
 
-Status: prototype planning only; no vehicle-ready schematic, PCB, or enclosure released.
+**Revision status:** architecture and part-selection draft, 2026-11-09. Not released for fabrication or vehicle use. The current `p0_carrier` board is an earlier carrier-only study and does not implement these circuits.
 
-## Packaging direction
+## Scope
 
-Use an OBD-II/J1962 male plug at the vehicle end and a USB-C device connector at the opposite end. Put the ESP32-S3 and receiver board in a compact serviceable enclosure that can be 3D printed after the chosen J1962 plug and USB connector are measured. The Chrysler Scanner V2.1.0 photos show a compact PCB inside a black enclosure with USB access and accessible power/debug points. Its later board is an integrated diagnostic tool; our packaging borrows the compact enclosed-board approach, not its circuit or transmit functions. The separate CCDBusTransceiver board is a useful scale reference at 33 x 25 x 12.4 mm, but that dimension excludes the OBD connector and does not set this enclosure size.
+P0 is a passive logger for the bus signals exposed at the Prowler's J1962 diagnostic connector. The logger shall maintain independent capture threads for CCD, VPW/PCI, and each SCI conductor that is confirmed populated. The web UI shall expose a tab for each thread, plus a combined timestamped timeline. Firmware must sample independent receiver outputs against one monotonic clock; it must not merge channels into a single UART stream.
 
-```text
-vehicle DLC -- J1962 male -- [enclosure: protected taps + ESP32-S3 + status] -- USB-C -- computer
-                                      +-- Wi-Fi AP / local capture GUI
+The ChryslerScanner V2.1.0 pin table is a useful candidate inventory: pin 2 PCI/VPW; pins 3/11 CCD+/-; pins 6, 7, 9, 12, 14, 15 SCI; pins 4/5 grounds; pin 16 battery. These are **reference-derived candidates**, not verified Prowler wiring facts. The 1999 Prowler service information and physical DLC inspection take precedence. Pins not verified as data remain disconnected from signal circuitry.
+
+## Candidate channel matrix
+
+| Thread | Candidate DLC contacts | Candidate receiver | Current confidence | Notes |
+|---|---|---|---|---|
+| CCD | 3 (+), 11 (-) | Differential comparator receiver, high impedance, no bus bias/termination | Medium for platform pin mapping; low for exact Prowler population | Dedicated differential front end; independent receiver output. Must preserve common-mode range and polarity. |
+| PCI / J1850 VPW | 2 | Automotive-tolerant single-wire receiver, comparator or qualified interface | Medium as ecosystem pin map; unverified for Prowler | Distinct single-wire physical layer. Do not reuse CCD analog front end. |
+| SCI-A RX (PCM) | 6 | Protected high-impedance single-wire logic receiver | Medium as ecosystem mapping; unverified | ChryslerScanner identifies this as an RX line. Exact line idle/high voltage and baud behavior need service data/capture. |
+| SCI-A TX (PCM/TCM) | 7 | Same receive-only tap class, independent channel | Medium as ecosystem mapping; unverified | Keep it receive-only in P0. |
+| SCI-B RX (TCM) | 9 | Same receive-only tap class, independent channel | Medium as ecosystem mapping; unverified | Keep it receive-only in P0. |
+| SCI-B RX (PCM) | 12 | Same receive-only tap class, independent channel | Medium as ecosystem mapping; unverified | Keep it receive-only in P0. |
+| SCI-A RX (TCM) | 14 | Same receive-only tap class, independent channel | Medium as ecosystem mapping; unverified | Keep it receive-only in P0. |
+| SCI-B TX (TCM) | 15 | Same receive-only tap class, independent channel | Medium as ecosystem mapping; unverified | Keep it receive-only in P0. |
+
+“All data available” means every populated data conductor receives its own front end and capture thread. It does not mean the standardized DLC exposes every in-vehicle network, nor that unknown contacts should be probed or driven.
+
+## Signal and power partition
+
+```mermaid
+flowchart LR
+  DLC[J1962 male connector]
+  CCD[Contacts 3 and 11<br/>CCD protection + differential comparator]
+  VPW[Contact 2<br/>VPW/PCI protection + receiver]
+  SCI[Contacts 6, 7, 9, 12, 14, 15<br/>one protected receiver each]
+  MCU[ESP32-S3<br/>independent edge capture inputs]
+  USB[USB-C<br/>ESD protection + USB CDC]
+  WEB[Wi-Fi AP<br/>one web tab per capture thread]
+  VIN[Contact 16<br/>fuse + reverse/transient protection + buck]
+  EN[JP_TX links<br/>open by default; transmit stages DNP]
+  DLC --> CCD --> MCU
+  DLC --> VPW --> MCU
+  DLC --> SCI --> MCU
+  MCU --> USB
+  MCU --> WEB
+  DLC --> VIN --> MCU
+  EN -. hardware inhibit .- DLC
 ```
 
-This draft interprets the requested form as a plug-in dongle. It does not include a second, female scan-tool pass-through connector; adding one would substantially enlarge the case and needs a separate packaging decision. Every populated J1962 pin should be documented and assessed, but only confirmed, high-impedance receiver taps should connect to circuitry. The device is not electrically transparent to every protocol merely because its connector has 16 contacts.
+Each receiver output remains a separate MCU input and gets a stable `thread` ID in raw captures. UI tab selection changes only what is displayed; it never filters data out of stored/exported captures. Connector signal grounds, chassis ground, protected supply, and logic ground are distinct nets until their intentional connection points are designed.
 
-## Preliminary parts list
+## Parts and selection status
 
-| Ref. | Qty. | Candidate / description | Status and rationale |
+| Ref. | Qty. | Proposed part / class | Status |
 |---|---:|---|---|
-| U1 | 1 | ESP32-S3 module or DevKitC-1 for prototype | Selected platform. Native USB CDC avoids a separate USB-UART bridge; Wi-Fi AP and web UI run on the module. For first capture, use the dev board; later make a carrier PCB around a module after power, RF, and USB details are fixed. |
-| J1 | 1 | J1962 16-contact male plug, board-mount or short pigtail style | Required mechanical interface. Exact part TBD from verified footprint, contact retention, cable/strain-relief, and enclosure dimensions. A pigtail eases a hobbyist prototype; board-mount is tidier but constrains the PCB and case. |
-| J2 | 1 | USB-C receptacle, USB 2.0 device wiring | Opposite-end data/configuration connector. Select after deciding board-mounted versus cable/strain-relieved implementation. Include correct CC pull-downs if not already on the selected ESP32 board. |
-| U6 | 1 | USB data-line ESD protection device | Add near exposed USB-C connector after selecting connector layout and checking USB 2.0 signal capacitance. Exact part TBD. |
-| Rcc1/Rcc2 | 2 | USB-C CC pull-down resistors | Device-side Rd, nominal 5.1 kOhm to ground on CC1/CC2 when using a USB-C receptacle; omit duplicates if already present on the selected dev board/carrier. |
-| U2 | 1 | TI TLV3212-Q1 dual comparator, e.g. SOIC-8 `TLV3212QDRQ1` | Receiver prototype candidate, not a CCD transceiver. 3.3 V supply/output and suitable common-mode range are promising; input protection, threshold, hysteresis, polarity, and loading still need a reviewed schematic and bench tests. Confirm live stock/package before ordering. |
-| U3 | 1 | Automotive-rated protected buck regulator, 12 V to 5 V | Required if powered from J1962 pin 16. **Not selected** until quiescent/current budget, cranking, reverse battery, and transient envelope are set. Do not choose an ordinary 12 V-to-5 V hobby buck by input-voltage label alone. |
-| F1 | 1 | Fuse or resettable protection in pin-16 power path | Required concept; rating and type TBD from power budget and harness strategy. |
-| D1 / Q1 | 1 set | Reverse-polarity protection and surge clamp coordinated with U3 | Required concept; no part selected before power transient requirements and topology review. |
-| U4 | 1 per distinct supported line layer | Receive-only physical front end(s) for confirmed DLC signals | CCD receiver candidate is U2. SCI or other diagnostic lines require separate, appropriate front ends after confirming 1999 Prowler DLC pin use and electrical levels. P0 claims broad available-port capture only after this inventory. |
-| R/C/D | as designed | Input series impedance, bias/reference/hysteresis network, low-capacitance protection, local decoupling | Values and exact protection parts are deliberately open. Do not install bus bias or termination. Protect each monitored signal without placing a material load on the bus. |
-| U5 / storage | 1 | Optional microSD socket/card or other capture storage | Not required for first live stream if web/USB export works. Add only if standalone capture without a connected client is needed; capture loss behavior and card power integrity need design. |
-| LED1..n | 2-3 | Power, capture, and error/status LEDs | Useful for enclosed operation; keep functions documented and current limited. Wi-Fi/device state is visible in GUI as well. |
-| TP1..n | several | Test pads for vehicle supply, protected 5 V, 3V3, GND, bus inputs, receiver output(s) | Add to the carrier PCB for bench debug; keep test access electrically safe and clearly labeled. |
-| H1 | 1 | 3D-printed enclosure, internal PCB retention, connector strain relief | Prototype material and dimensions TBD. Measure actual mating plug, module/dev-board, USB plug shell and clearance, print tolerances, and under-dash access before CAD freeze. |
+| CN1 | 1 | Macchina CCBDM20 right-angle male J1962 plug, or equivalent with supplied mechanical drawing | Candidate selected for a board-edge plug form factor. Mechanical drawing identifies a 16-pin, 30 V, 5 A connector and dimensions; obtain/measure the actual part before footprint release. The ChryslerScanner V1.44 BOM calls its own footprint `OBD2-90` but does not identify the vendor part. |
+| U1 | 1 | ESP32-S3-DevKitC-1 v1.1 for prototype; later ESP32-S3 module | Existing board carrier choice; separate GPIO/timestamp input per receiver. Wi-Fi AP and local web UI. |
+| U2 | 1 | USB-C ESD protector, e.g. USBLC6-2SC6 | Reference BOM precedent; verify USB wiring and device-side ESD placement. |
+| U3 | 1 | Automotive buck regulator, 12 V DLC to 5 V | Not selected. Must be chosen with input/transient/reverse-polarity protection and a documented current budget. The ChryslerScanner's TD1509P5 is a reference, not adopted. |
+| F1, D1, TVS1 | 1 each | Input fuse/current limiter, reverse battery protection, and automotive transient clamp | Required if powered from DLC pin 16; exact network and ratings open pending power budget and transient design. |
+| U4 | 1 | TI TLV1701-Q1 single comparator, `TLV1701QDBVRQ1` (SOT-23-5) candidate for CCD differential polarity sensing | Active automotive comparator family; rail-to-rail input and open-collector output. It is not a CCD transceiver. Differential threshold/reference, hysteresis, ESD and bus loading still require a reviewed circuit and bench validation. |
+| U5-U6 | 2 | TI TLV1704-Q1 quad comparator, `TLV1704QPWRQ1` (TSSOP-14), candidate for seven independent VPW/SCI receive channels | Active automotive comparator family. Eight channels give one spare; no input channel is shared. This is a receive comparator proposal, not an electrically complete interface. Each candidate line needs its own protected input network and validated threshold. |
+| R/C/D input network | per channel | Series impedance, line-specific divider/clamp, reference and hysteresis components | Values intentionally TBD until each voltage range is sourced and circuit bench-tested. A first-order 100 kOhm/47 kOhm divider is only a calculation starting point for lines whose high level supports it; it is not a released value or protection network. No shared analog input across different bus types. |
+| RPU1..n | one per logic output | 3.3 V pull-up for open-drain comparator output, where required | Choose after comparator output type and ESP32 input circuit are set; do not pull any ESP32 pin to vehicle voltage. |
+| JP_TX_CCD, JP_TX_VPW, JP_TX_SCIx | one per physical layer/line | Physical transmit-inhibit links | Open by default and placed in each driver's enable path; independent hardware disconnection is preferred over a single firmware-controlled gate. A fitted link is not authorization to transmit on a vehicle. |
+| U8..n, Qx | DNP / later | Protocol-specific transmit drivers | Do not populate in the P0 vehicle-capture assembly. Need separate reviewed driver topology per physical layer before isolated-bench emulation. The user-suggested CCD complementary MOSFET stage does not apply to SCI/VPW. |
+| LED1..3 | 3 | Power, capture, fault/status LEDs | Candidate; current limit and GPIO mapping TBD. |
+| TP1..n | 1 set | Battery input, protected rails, logic ground, each bus input, comparator references/outputs | Include at safe, serviceable locations. Label signals and keep them accessible in the enclosure. |
+| JUSB1 | 1 | USB-C receptacle or strain-relieved pigtail | Select to match ESP32-S3 USB implementation and enclosure. Include correct CC resistors unless already present on the chosen module. |
+| H1 | 1 | 3D-printed enclosure, connector support and strain relief | Fit-check after exact connector and PCB dimensions are verified. |
 
-## Prototype phases
+## ChryslerScanner V1.44 BOM review
 
-1. **Bench receiver:** ESP32-S3 dev board, one TLV3212-Q1 sample if available (and available parts-bin comparators for comparison), isolated low-voltage waveform source, current-limited lab supply, and test leads. Validate the receive concept off-vehicle. No transmitter, bus bias, or termination.
-2. **Vehicle-power bench:** add the protected pin-16 power chain only after a candidate schematic has been checked against the regulator and protection data sheets. Validate current draw, startup, reverse protection, and supply transients using an appropriate lab setup.
-3. **OBD prototype harness:** use a verified J1962 male plug. Confirm its pin map against the 1999 Prowler documentation and continuity-test the harness before insertion. Begin with only ground, protected power, and the proven high-impedance receiver taps connected.
-4. **Enclosure:** model the selected connector, carrier/dev-board, USB access, strain relief, and cooling. Print a fit-check shell before finalizing the PCB outline.
+The V1.44 BOM contains useful clues: `OBD2-90` J1962 connector footprint, SS34 power diodes, LM2576S-5.0 buck, ESDCAN24-2BLY, AO3400/AO3401 MOSFETs, IRF7317 dual MOSFET, 74HC4066 switches, USBLC6-2SC6, LM393D, status LEDs, and extensive passives. It is a multi-protocol active scanner. We borrow the edge-connector concept and investigate the cited protection/switch/transceiver parts; we do not copy its circuit or assume its values/topology are safe for this design. It is GPL-3.0, so no source artwork/code is copied into this project.
 
-## Known architecture clues from the reference hardware
+The V2.1.0 schematic describes separate CCD, PCI/VPW, and SCI circuits and makes the candidate pin map above explicit. It also uses switchable active interfaces and diagnostics beyond our initial scope. The precise V2.1 J1962 connector manufacturer/footprint is not identified in the extracted material; the old BOM's `OBD2-90` is only a library footprint name.
 
-- ChryslerScanner V2.1.0 schematic material lists an ESP32-PICO-D4, USBLC6-2SC6 USB protection, CP2102 USB-UART bridge, TS391C comparator, 74LVC2G66 switches, AO3400 MOSFETs, HSW4602 switches, and multiple interfaces for CCD, PCI/VPW, and SCI. This is a much broader diagnostic/transmit instrument. Since our ESP32-S3 supports native USB, the CP2102 is not automatically needed. USB ESD protection remains relevant. Its multiple bus circuits must not be collapsed into a single assumed CCD interface.
-- The ChryslerScanner pin table assigns CCD to J1962 pins 3 and 11, PCI/VPW to pin 2, and several SCI lines to other pins; these are ecosystem clues, not verified 1999 Prowler pin assignments. Confirm every DLC connection in vehicle-specific service material before claiming coverage.
-- CCDBusTransceiver V1.XX uses +5 V, UART RX/TX, ground, CCD+/- and selectable TBEN bias/termination; its project says disconnect TBEN jumpers for a vehicle network. It is not a direct ESP32-S3 product module and is not included in the P0 BOM.
-- The comparator/MOSFET proposal shared in discussion is not adopted as a complete circuit. P0 omits every transmit component and any bus bias/termination. The CMOS comparator input network still requires protection and bus-loading validation.
+## Required implementation before purchase/fab
 
-## Do not order yet
+1. Verify which candidate contacts are populated on the 1999 Prowler and their names/electrical limits in OEM service documents. Pin 4 chassis ground and pin 5 signal ground remain separately identified.
+2. Select actual connector and obtain its full pin-layout drawing/STEP; create and inspect its custom footprint against the physical part. The current 88 x 38 mm carrier and generic pigtail header are not the final board.
+3. Design separate receiver schematics for CCD differential, VPW/PCI, and each SCI data conductor. Show protection, maximum input voltage, input impedance, switching threshold, hysteresis, polarity, output logic level, and test points.
+4. Validate each receiver with an isolated signal generator and current-limited supply; measure loading and output timing. Do not test the transmit stages on a vehicle.
+5. Rework firmware to timestamp independent receiver edges and parse each physical protocol in its own thread; add per-thread loss counters, raw capture export, and tabbed web UI.
+6. Select protected power and verify startup, cranking envelope, reverse battery, and transient behavior before DLC pin 16 is connected.
 
-Do not order a final J1962 connector, automotive power front end, TVS, SCI receiver, or PCB until the Prowler DLC pin map, connector geometry, required signal layers, and power budget are verified. The only semiconductor purchase suitable for the current bench-receiver investigation is a small quantity of TLV3212-Q1; a comparator already in the parts bin can be evaluated first if its input range and output behavior fit a safe isolated test.
-
-The P0 device remains receive-only. No CCD transmitter, SCI transmitter, OBD request generation, P1 resistor-key output, or P1 12 V reverse-camera trigger is in this BOM.
+The present CAD remains preliminary. Do not order the proposed comparator/MOSFET circuit from the BOM alone. Do not populate or enable transmit hardware for vehicle use.

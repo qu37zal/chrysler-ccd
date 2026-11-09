@@ -1,11 +1,19 @@
 # Source inventory
 
+## Additional P0 multi-thread references
+
+- ChryslerScanner V2.1.0 schematic: https://github.com/laszlodaniel/ChryslerScanner/blob/master/PCB/V210/ChryslerScanner_V210/schematic/ChryslerScanner_V210_schematic.pdf . The schematic lists separate CCD, PCI/VPW and SCI circuits and candidate DLC pin assignments. It is GPL-3.0 and is used only as a pin-map and BOM reference; the assignments are not verified for the Prowler.
+- ChryslerScanner V1.44 BOM: https://github.com/laszlodaniel/ChryslerScanner/blob/master/PCB/V144/ChryslerCCDSCIScanner_V144/bom/ChryslerCCDSCIScanner_V144_BOM.txt . Retrieved BOM includes `OBD2-90`, LM393D, IRF7317, AO3400/AO3401, 74HC4066, USBLC6-2SC6, ESD parts, and power components. `OBD2-90` is a library footprint name, not a purchasable connector identity.
+- Macchina CCBDM20 right-angle male J1962 connector: https://www.macchina.cc/catalog/parts/obd2-male-right-angle-pth-connector ; drawing: https://www.macchina.cc/sites/default/files/CCBDM20.pdf . The manufacturer drawing identifies dimensions, 16 contacts and 30 V maximum rating. It is a candidate; verify the purchased sample against a custom KiCad footprint before board release.
+- TI TLV170x-Q1 comparator family: https://www.ti.com/product/TLV1704-Q1 and https://www.ti.com/lit/ds/symlink/tlv1704-q1.pdf . Manufacturer lists 2.2-36 V supply, rail-to-rail input, open-collector outputs and AEC-Q100 automotive qualification. TLV1701-Q1/TLV1704-Q1 are component candidates only; the choice does not establish safe DLC input conditioning or a valid protocol receiver circuit.
+
 Project: [qu37zal/chrysler-ccd](https://github.com/qu37zal/chrysler-ccd). Availability/relevance checked 2026-11-09. Recheck before reuse; record exact commit hash and license before deriving code.
 
 | Source | URL | Relevance / status | License/hash |
 |---|---|---|---|
 | CDP68HC68S1 datasheet | https://cdck-file-uploads-global.s3.dualstack.us-west-2.amazonaws.com/digikey/original/3X/9/a/9afb0757f38bce6dab4464e1de7951e5701185da.PDF | Serial Bus Interface Chip; 14-pin PDIP CDP68HC68S1E and 20-pin SOIC CDP68HC68S1M, 4–7 V supply, 7812.5 bit/s typical | Intersil datasheet, April 1994 |
-| ChryslerScanner | https://github.com/laszlodaniel/ChryslerScanner | User-named repo; upstream URL may redirect/rename; audit needed | Pending |
+| ChryslerScanner V2.1.0 schematic | https://github.com/laszlodaniel/ChryslerScanner/blob/master/PCB/V210/ChryslerScanner_V210/schematic/ChryslerScanner_V210_schematic.pdf | Reference schematic lists separate CCD, PCI/VPW and SCI circuits and candidate DLC pin assignments; not a Prowler-specific pinout or design to copy | GPL-3.0 project; upstream ref/hash pending |
+| ChryslerScanner V1.44 BOM | https://github.com/laszlodaniel/ChryslerScanner/blob/master/PCB/V144/ChryslerCCDSCIScanner_V144/bom/ChryslerCCDSCIScanner_V144_BOM.txt | Retrieved BOM lists `OBD2-90`, LM393D, IRF7317, AO3400/AO3401, 74HC4066, USBLC6-2SC6, protection and power parts. Connector footprint name does not identify a purchasable part. | GPL-3.0 project; BOM checked 2026-11-09 |
 | CCDBusTransceiver | https://github.com/laszlodaniel/CCDBusTransceiver | Hardware/transceiver implementation; inspect schematic before selection | Pending |
 | CCDBusTransceiver V1.03 datasheet | https://d3s5r33r268y59.cloudfront.net/datasheets/20980/2020-08-06-10-15-14/CCDBusTransceiver_V103_datasheet.pdf | Part BC-002103; 7812.5 baud; 5 V UART; bias/termination selectable. Not direct ESP32 compatible. | GPL-3.0 project; PDF hash pending |
 | CCD transceiver redesign notes | https://chryslerccdsci.wordpress.com/2020/03/22/re-designing-the-ccd-bus-transceiver-chip/ | Explains obsolete IC replacement circuits, receiver comparator, and software responsibilities lost when not using original SBIC | Technical article; reference only |

@@ -1,13 +1,14 @@
 # Prioritized backlog
 
-1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for every DLC cavity, radio connector, BCM and speed-sensitive selector; determine whether separate SCI/other diagnostic signals are populated and record each layer/pin. Capture page references and license/access terms.
-2. **P0 blocker:** Inspect parts-bin inventory and select a 3.3 V receive-only CCD front end with verified input protection and loading. Decide between a comparator circuit and documented transceiver board after checking component availability; do not order obsolete CDP68HC68S1E as the default.
+1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for every DLC cavity, radio connector, BCM and speed-sensitive selector; determine whether CCD, PCI/VPW and individual SCI lines are populated and record each layer/pin. Capture page references and license/access terms.
+2. **P0 blocker:** Design and review separate protected receiver circuits for CCD differential, VPW/PCI, and every confirmed SCI conductor. No generic/shared interface; establish each electrical range, threshold, hysteresis, loading and MCU output level.
 3. **P0 blocker:** Audit upstream repositories at exact commit hashes; record licenses, protocol assumptions and reusable algorithms. Resolve project license before reuse.
-4. **P0 blocker:** Design protected automotive power and a modular CCD front end: comparator RX plus reserved, unpopulated complementary N/P MOSFET differential TX stage for later bench emulation. Keep TX physically disconnected and hardware-inhibited by default; no bus bias or termination. Select modern MOSFETs after swing/current-balance analysis; IRF7317 is end-of-life and its N/P channels are not closely matched. Define isolated-bench TX validation and arbitration/fault review as later gates.
-5. **P0:** Implement hardware UART/RMT receive framing with microsecond timestamp and overflow accounting; capture raw bytes and checksum status.
-6. **P0:** Validate interface against isolated CCD signal source and logic analyzer, including reversed polarity, malformed data, disconnect and MCU reset.
+4. **P0 blocker:** Select protected power and board-edge J1962 connector from full manufacturer data. Verify connector footprint against the physical part; the upstream `OBD2-90` library name does not identify a vendor part.
+5. **P0 blocker:** If transmitter circuitry is retained for isolated bench work, use independent protocol-specific stages, normally-open physical inhibits, and DNP components in P0. No bus bias or termination. Complete topology/arbitration/fault review before population; no vehicle transmission.
+6. **P0:** Implement independent edge capture threads with microsecond timestamps and overflow accounting; preserve thread ID and raw activity through capture export.
+7. **P0:** Validate each distinct interface against isolated signal sources and logic analyzer, including polarity, malformed data, disconnect and MCU reset.
 7. **P0:** Expand host replay fixtures and frame parser using independently sourced checksum/framing specification.
-8. **P0:** Implement local Wi-Fi AP, authenticated/configurable browser interface, live counters and downloadable capture format; no cloud dependency.
+9. **P0:** Implement local Wi-Fi AP and browser interface with a tab per protocol/thread, combined timeline, live per-thread counters, and downloadable capture format; no cloud dependency.
 9. **P0:** Mechanically define enclosure and OBD J1962 male/female pass-through semantics, pin continuity and strain relief before CAD/printing.
 10. **P0:** Implement stationary event annotation and deterministic capture correlation report; preserve full provenance.
 11. **P0:** First genuine Prowler capture only after steps 1–6; use passive receiver(s) on verified DLC pins, stationary vehicle, no scan-tool transmission.

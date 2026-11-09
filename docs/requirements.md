@@ -1,10 +1,12 @@
 # Requirements and acceptance criteria
 
 ## P0
-- Physically transmit-inhibited CCD receiver; no bias or termination added.
-- DLC 3/11 mapping and interface electrical envelope verified from 1999 Prowler documentation and bench measurement.
+- Passive receiver threads for every verified, populated data conductor at the DLC: CCD pair, PCI/VPW, and separate SCI lines where present. Each thread must have an independent receive front end, edge timestamp source, loss counter, raw capture and UI tab.
+- Keep CCD, PCI/VPW, and each SCI line electrically separate. No bus bias or termination. Any future transmit driver has a separate, normally-open physical inhibit and remains unpopulated in the P0 vehicle-capture assembly.
+- Verify candidate DLC pin mappings and each interface's electrical envelope from 1999 Prowler service information and isolated bench measurement before vehicle hookup.
 - Monotonic microsecond timestamp, raw bytes, checksum/framing status and loss counters exported over USB.
 - Bounded buffering; watchdog-safe recovery; firmware build reproducible in PlatformIO.
+- Web UI provides a tab per protocol/thread and a shared cross-thread timeline with thread-level filters. The tabs must not conceal dropped samples or synthetic provenance.
 - Host parser accepts documented JSONL, rejects malformed input, and clearly preserves synthetic provenance.
 
 ## P1
