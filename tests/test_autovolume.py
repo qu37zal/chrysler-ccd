@@ -51,6 +51,17 @@ class AutoVolumeTests(unittest.TestCase):
         self.assertFalse(manual.automatic)
         self.assertEqual(c.commanded_offset, before)
 
+    def test_lost_head_unit_pulse_is_not_retried_forever(self):
+        c = controller()
+        emitted = c.receive_offset(1, 0)
+        self.assertEqual(len(emitted), 1)
+        # Simulate the head unit missing the emitted pulse; there is no ACK.
+        self.assertEqual(c.receive_offset(1, 250), [])
+        self.assertEqual(c.commanded_offset, 1)
+        trim = c.manual_press(-1)[0]
+        self.assertEqual(trim.direction, -1)
+        self.assertFalse(trim.automatic)
+
     def test_off_mode_removes_only_automatic_contribution(self):
         c = controller()
         c.receive_offset(2, 0)
