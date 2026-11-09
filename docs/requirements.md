@@ -12,5 +12,10 @@
 - Bounded volume compensation, three switch modes, hysteresis, smoothing, manual-change tracking, power-cycle recovery, passive failure behavior.
 - Offline simulation covers speed transitions, manual adjustments, message loss and resets.
 
+## Future isolated module emulation
+- The software and hardware architecture leaves room for reviewed CCD module behavior beyond the radio, including investigation of a CCD TPMS module/sensor emulator for newer sensors.
+- TPMS message formats, sensor enrollment/identity, timing, compatibility and receiver behavior remain unknown until sourced or measured.
+- Any TPMS emulation begins on an isolated bench network with bounded, reviewed message behavior; it does not authorize transmission on a vehicle bus.
+
 ## Acceptance
 No valid vehicle capture or decoded signal is claimed until backed by timestamped capture and repeatable stationary test. Safety and licensing reviews precede release.
