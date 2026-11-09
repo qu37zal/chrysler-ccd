@@ -3,10 +3,10 @@
 ## P0 core: genuine passive CCD capture
 
 1. **Design reference / installation gate:** Use the already archived 1997/1999 Prowler service manual for design and record exact page/figure references. Elvira is a 2000; treat applicability as a carryover assumption. Consult the owner's paper 2000 manual for critical DLC cavities/view, CCD polarity, grounds, fused power and electrical limits as needed for design decisions. Saved 2000 factory diagrams in Drive should be checked first. This does not block schematic development from the archived manual.
-2. **Blocker:** Complete the component-level CCD receive and protected power schematic. Specify input envelope, loading, protection, thresholds, hysteresis, 3.3 V logic, and test points. Do not add bus bias/termination or vehicle-side TX.
+2. **Blocker:** Finish positive transient protection, leakage/offset corners and the complete protected power schematic. The connected 25-component CCD subsystem and nominal SPICE results now exist. Specify the remaining input envelope, fault limits, timing and test points. No bus bias/termination; populated bench TX stays jumper-inhibited for vehicle capture.
 3. **Blocker:** Select a J1962 male edge connector from full mechanical data; create/measure its footprint and prove enclosure fit. The reference project's `OBD2-90` library footprint name is not a part number.
 4. **P0:** Update the KiCad PCB to include the real J1962 edge connector, protected CCD front end, ESP32-S3, USB-C, status/debug points, and protected power. Route using FreeRouting, import the session, review in KiCad, and rerun DRC.
-5. **P0:** Validate the receiver and power chain on an isolated bench: waveform levels, polarity, input loading, timestamp fidelity, startup/reset/disconnect and error recovery. Keep physical TX absent.
+5. **P0:** Validate the receiver and power chain on an isolated bench: waveform levels, polarity, input loading, timestamp fidelity, startup/reset/disconnect and error recovery. Keep the physical TX power jumper absent for P0 vehicle capture.
 6. **P0:** Implement ESP32-S3 capture with bounded queues, microsecond monotonic timestamps, raw frames/checksum/error/drop metadata, USB serial export and device version reporting.
 7. **P0:** Implement local Wi-Fi AP and a CCD capture/status web view with downloadable raw capture. Keep the capture record schema extensible with thread identity.
 8. **P0:** First genuine Prowler CCD capture only after steps 1-7; stationary setup, receive-only, no scan-tool queries.

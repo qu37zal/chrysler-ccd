@@ -1,0 +1,60 @@
+{
+  "netlist": "ccd_bus.cir",
+  "synthetic": true,
+  "simulator": "stdout ** ngspice-46 shared library",
+  "errors": [],
+  "measurements": {
+    "diff_idle": -0.0229708,
+    "diff_dominant": 0.459936,
+    "rx_idle": 3.3,
+    "rx_dominant": 0.10338,
+    "diff_inhibited": -0.0229708,
+    "rx_inhibited": 3.3,
+    "drive_current": -0.00541016
+  },
+  "checks": {
+    "diff_idle": {
+      "value": -0.0229708,
+      "min": -0.05,
+      "max": -0.005,
+      "pass": true
+    },
+    "diff_dominant": {
+      "value": 0.459936,
+      "min": 0.2,
+      "max": 0.8,
+      "pass": true
+    },
+    "rx_idle": {
+      "value": 3.3,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "rx_dominant": {
+      "value": 0.10338,
+      "min": -0.1,
+      "max": 0.4,
+      "pass": true
+    },
+    "diff_inhibited": {
+      "value": -0.0229708,
+      "min": -0.05,
+      "max": -0.005,
+      "pass": true
+    },
+    "rx_inhibited": {
+      "value": 3.3,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "drive_current": {
+      "value": -0.00541016,
+      "min": -0.01,
+      "max": -0.001,
+      "pass": true
+    }
+  },
+  "pass": true
+}

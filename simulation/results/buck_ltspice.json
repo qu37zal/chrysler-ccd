@@ -1,0 +1,40 @@
+{
+  "netlist": "buck.cir",
+  "synthetic": true,
+  "netlist_sha256": "a2c586cbd5549e6d4767233cc7fcf24c51ae0d75f117b4e7ae56b2fd05576257",
+  "simulator": "LTspice 26.1.1 for Windows",
+  "completed": true,
+  "checks": {
+    "vout_light": {
+      "value": 5.13696544365,
+      "min": 4.75,
+      "max": 5.25,
+      "pass": true
+    },
+    "vout_heavy": {
+      "value": 5.13383535072,
+      "min": 4.75,
+      "max": 5.25,
+      "pass": true
+    },
+    "vout_min": {
+      "value": 5.00053739548,
+      "min": 4.5,
+      "max": 5.25,
+      "pass": true
+    },
+    "vout_max": {
+      "value": 5.16776371002,
+      "min": 4.75,
+      "max": 5.5,
+      "pass": true
+    },
+    "inductor_peak": {
+      "value": 0.830516517162,
+      "min": 0.01,
+      "max": 1.5,
+      "pass": true
+    }
+  },
+  "pass": true
+}

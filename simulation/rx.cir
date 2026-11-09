@@ -1,0 +1,19 @@
+* CCD receive prototype; synthetic waveform, not Prowler capture
+.include models/tlv1701.lib
+V5 v5 0 5
+V3 v3 0 3.3
+VP ccdp 0 PWL(0 2.49 1m 2.49 1.002m 2.8 2m 2.8 2.002m 2.49 3m 2.49)
+VN ccdn 0 PWL(0 2.51 1m 2.51 1.002m 2.2 2m 2.2 2.002m 2.51 3m 2.51)
+RP ccdp sp 47k
+RN ccdn sn 47k
+CP sp 0 22p
+CN sn 0 22p
+XRX sn sp v5 0 rx TLV1701
+RPULL v3 rx 4.7k
+CLOAD rx 0 20p
+.tran 100n 3m 0 100n
+.meas TRAN rx_idle FIND V(rx) AT=0.9m
+.meas TRAN rx_dominant FIND V(rx) AT=1.9m
+.meas TRAN rx_return FIND V(rx) AT=2.9m
+.save V(ccdp) V(ccdn) V(rx) V(sp) V(sn)
+.end

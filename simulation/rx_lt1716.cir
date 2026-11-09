@@ -1,0 +1,24 @@
+* Synthetic receiver exercise, not measured vehicle traffic.
+* No clamp to a local positive supply: inputs may remain powered when V3 is off.
+.include models/LT1716.lib
+V3 v3 0 PWL(0 3.3 2m 3.3 2.001m 0 3m 0)
+VP sourcep 0 PWL(0 2.49 0.5m 2.49 0.502m 2.8 1m 2.8 1.002m 2.49 3m 2.49)
+VN sourcen 0 PWL(0 2.51 0.5m 2.51 0.502m 2.2 1m 2.2 1.002m 2.51 3m 2.51)
+* Sense sources measure input loading including input-series network.
+VSP sourcep ccdp 0
+VSN sourcen ccdn 0
+RP ccdp sp 47k
+RN ccdn sn 47k
+CP sp 0 22p
+CN sn 0 22p
+XRX sn sp v3 0 rx LT1716
+RPULL v3 rx 4.7k
+CLOAD rx 0 20p
+.tran 100n 3m 0 100n
+.meas TRAN rx_idle FIND V(rx) AT=0.4m
+.meas TRAN rx_dominant FIND V(rx) AT=0.9m
+.meas TRAN rx_return FIND V(rx) AT=1.9m
+.meas TRAN input_p_off FIND I(VSP) AT=2.9m
+.meas TRAN input_n_off FIND I(VSN) AT=2.9m
+.save V(ccdp) V(ccdn) V(rx) V(sp) V(sn) I(VSP) I(VSN)
+.end

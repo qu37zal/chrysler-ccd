@@ -1,0 +1,39 @@
+{
+  "netlist": "ldo.cir",
+  "synthetic": true,
+  "simulator": "stdout ** ngspice-46 shared library",
+  "errors": [],
+  "measurements": {
+    "vout_light": 3.30343,
+    "vout_heavy": 3.30171,
+    "vout_min": 3.26376,
+    "vout_max": 3.34138
+  },
+  "checks": {
+    "vout_light": {
+      "value": 3.30343,
+      "min": 3.2,
+      "max": 3.4,
+      "pass": true
+    },
+    "vout_heavy": {
+      "value": 3.30171,
+      "min": 3.2,
+      "max": 3.4,
+      "pass": true
+    },
+    "vout_min": {
+      "value": 3.26376,
+      "min": 3.1,
+      "max": 3.4,
+      "pass": true
+    },
+    "vout_max": {
+      "value": 3.34138,
+      "min": 3.2,
+      "max": 3.5,
+      "pass": true
+    }
+  },
+  "pass": true
+}

@@ -1,0 +1,28 @@
+* LM5164-Q1 5 V prototype, synthetic source and load
+.include models/LM5164-Q1_TRANS.LIB
+VBAT vin 0 PWL(0 0 10u 14 20m 14)
+CIN vin 0 4.4u
+XBUCK bst vin fb 0 0 pg ron sw vin LM5164-Q1_TRANS
+RRON ron 0 41.2k
+CBST bst sw 2.2n
+L1 sw lx 68u
+RDCR lx vout 0.18
+COUT vout co 30u
+RESR co 0 0.02
+RFB1 vout fb 158k
+RFB2 fb 0 49.9k
+RA sw ripple 47k
+CA ripple vout 3.3n
+CB ripple fb 100p
+RPG vout pg 100k
+RLOAD vout 0 50
+ILOAD vout 0 PULSE(0 0.5 10m 1u 1u 5m 20m)
+.options method=gear reltol=0.003 abstol=1n vntol=1u
+.tran 20n 20m 0 20n
+.meas TRAN vout_light AVG V(vout) FROM=8m TO=9m
+.meas TRAN vout_heavy AVG V(vout) FROM=13m TO=14m
+.meas TRAN vout_min MIN V(vout) FROM=9m TO=14m
+.meas TRAN vout_max MAX V(vout) FROM=9m TO=14m
+.meas TRAN inductor_peak MAX I(L1) FROM=8m TO=19m
+.save V(vout) V(vin) I(L1) V(sw) V(fb)
+.end

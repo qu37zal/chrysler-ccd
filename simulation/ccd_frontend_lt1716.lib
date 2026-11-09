@@ -1,0 +1,35 @@
+* Independent candidate circuit. No vehicle bias or termination inside this block.
+* LT1716 is powered at 3.3 V. No positive input clamps to local supply rails.
+* Physical jumper supplies VTX; absent jumper must leave both output devices off.
+.include models/LT1716.lib
+.include models/2N7002Q.lib
+.include models/BSS84Q.lib
+.include models/MMBT3906.lib
+.include models/BAV21W-ngspice.lib
+.subckt CCD_FRONTEND_LT CP CN V3 DOM RX VTX
+RINP CP SP 47k
+RINN CN SN 47k
+CINP SP 0 22p
+CINN SN 0 22p
+DPG 0 SP DI_BAV21WS
+DNG 0 SN DI_BAV21WS
+XRX SN SP V3 0 RX LT1716
+RPULL V3 RX 4.7k
+CLOAD RX 0 20p
+XQP DP GP VTX BSS84Q
+XQN DN GN 0 2N7002Q
+XQINV GP DOM 0 2N7002Q
+RPD DOM 0 100k
+RPG VTX GP 10k
+RPBASE GP BP 10k
+RPBE BP VTX 100k
+QGATE NGDRIVE BP VTX DI_MMBT3906
+RGATE NGDRIVE GN 220
+RNG GN 0 10k
+RVTX VTX 0 100k
+DHI DP DH DI_BAV21WS
+RHI DH CP 360
+RLO CN DL 360
+DLO DL DN DI_BAV21WS
+.ends CCD_FRONTEND_LT
+

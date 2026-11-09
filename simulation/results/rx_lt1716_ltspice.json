@@ -1,0 +1,40 @@
+{
+  "netlist": "rx_lt1716.cir",
+  "synthetic": true,
+  "netlist_sha256": "d5f6aed7bba95fb1623ad13a3e4e76083baad53cb2d0086a411d7965e91a5bf3",
+  "simulator": "LTspice 26.1.1 for Windows",
+  "completed": true,
+  "checks": {
+    "rx_idle": {
+      "value": 3.29991054535,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "rx_dominant": {
+      "value": 0.131804258106,
+      "min": -0.1,
+      "max": 0.4,
+      "pass": true
+    },
+    "rx_return": {
+      "value": 3.29991054535,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "input_p_off": {
+      "value": -1.17318110782e-09,
+      "min": -1e-05,
+      "max": 1e-05,
+      "pass": true
+    },
+    "input_n_off": {
+      "value": 1.67318381372e-09,
+      "min": -1e-05,
+      "max": 1e-05,
+      "pass": true
+    }
+  },
+  "pass": true
+}

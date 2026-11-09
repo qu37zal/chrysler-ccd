@@ -1,0 +1,459 @@
+[
+  {
+    "ref": "U101",
+    "value": "LT1716HS5#TRMPBF",
+    "library": "Chrysler:LT1716",
+    "footprint": "Package_TO_SOT_SMD:TSOT-23-5",
+    "pins": {
+      "1": "CCD_RX",
+      "2": "GND",
+      "3": "SENSE_N",
+      "4": "SENSE_P",
+      "5": "3V3"
+    },
+    "xy": [
+      124.46,
+      54.61
+    ],
+    "mpn": "LT1716HS5#TRMPBF",
+    "manufacturer": "Analog Devices",
+    "model": "LT1716, installed LTspice encrypted family model",
+    "note": "H grade -40..125 C. Generic H part is not the automotive #W orderable."
+  },
+  {
+    "ref": "R101",
+    "value": "47k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "CCD_P",
+      "2": "SENSE_P"
+    },
+    "xy": [
+      35.56,
+      49.53
+    ],
+    "mpn": "RC0805FR-0747KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R102",
+    "value": "47k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "CCD_N",
+      "2": "SENSE_N"
+    },
+    "xy": [
+      64.77,
+      49.53
+    ],
+    "mpn": "RC0805FR-0747KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "C101",
+    "value": "22p",
+    "library": "Device:C",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "pins": {
+      "1": "SENSE_P",
+      "2": "GND"
+    },
+    "xy": [
+      35.56,
+      85.09
+    ],
+    "mpn": "C0805C220J5GACTU",
+    "manufacturer": "KEMET",
+    "model": "ideal C; package/ESR not included",
+    "note": ""
+  },
+  {
+    "ref": "C102",
+    "value": "22p",
+    "library": "Device:C",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "pins": {
+      "1": "SENSE_N",
+      "2": "GND"
+    },
+    "xy": [
+      64.77,
+      85.09
+    ],
+    "mpn": "C0805C220J5GACTU",
+    "manufacturer": "KEMET",
+    "model": "ideal C; package/ESR not included",
+    "note": ""
+  },
+  {
+    "ref": "C103",
+    "value": "100n",
+    "library": "Device:C",
+    "footprint": "Capacitor_SMD:C_0805_2012Metric",
+    "pins": {
+      "1": "3V3",
+      "2": "GND"
+    },
+    "xy": [
+      154.94,
+      85.09
+    ],
+    "mpn": "C0805C104K5RACTU",
+    "manufacturer": "KEMET",
+    "model": "ideal C; package/ESR not included",
+    "note": ""
+  },
+  {
+    "ref": "R103",
+    "value": "4.7k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "3V3",
+      "2": "CCD_RX"
+    },
+    "xy": [
+      154.94,
+      49.53
+    ],
+    "mpn": "RC0805FR-074K7L",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "D101",
+    "value": "BAV21W-7-F",
+    "library": "Device:D",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "pins": {
+      "1": "TX_HI",
+      "2": "PMOS_D"
+    },
+    "xy": [
+      44.45,
+      134.62
+    ],
+    "mpn": "BAV21W-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "BAV21W vendor file; model named DI_BAV21WS; CJO patch",
+    "note": "Vendor file naming inconsistency is tracked; do not treat model leakage as guaranteed."
+  },
+  {
+    "ref": "D102",
+    "value": "BAV21W-7-F",
+    "library": "Device:D",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "pins": {
+      "1": "NMOS_D",
+      "2": "TX_LO"
+    },
+    "xy": [
+      110.49,
+      134.62
+    ],
+    "mpn": "BAV21W-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "BAV21W vendor file; model named DI_BAV21WS; CJO patch",
+    "note": "Vendor file naming inconsistency is tracked; do not treat model leakage as guaranteed."
+  },
+  {
+    "ref": "D103",
+    "value": "BAV21W-7-F",
+    "library": "Device:D",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "pins": {
+      "1": "SENSE_P",
+      "2": "GND"
+    },
+    "xy": [
+      35.56,
+      115.57
+    ],
+    "mpn": "BAV21W-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "BAV21W vendor file; model named DI_BAV21WS; CJO patch",
+    "note": "Vendor file naming inconsistency is tracked; do not treat model leakage as guaranteed."
+  },
+  {
+    "ref": "D104",
+    "value": "BAV21W-7-F",
+    "library": "Device:D",
+    "footprint": "Diode_SMD:D_SOD-123",
+    "pins": {
+      "1": "SENSE_N",
+      "2": "GND"
+    },
+    "xy": [
+      64.77,
+      115.57
+    ],
+    "mpn": "BAV21W-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "BAV21W vendor file; model named DI_BAV21WS; CJO patch",
+    "note": "Vendor file naming inconsistency is tracked; do not treat model leakage as guaranteed."
+  },
+  {
+    "ref": "Q101",
+    "value": "BSS84Q-7-F",
+    "library": "Transistor_FET:Q_PMOS_GSD",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "pins": {
+      "1": "P_GATE",
+      "2": "VTX",
+      "3": "PMOS_D"
+    },
+    "xy": [
+      44.45,
+      170.18
+    ],
+    "mpn": "BSS84Q-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "BSS84Q vendor subcircuit",
+    "note": ""
+  },
+  {
+    "ref": "Q102",
+    "value": "2N7002Q-7-F",
+    "library": "Transistor_FET:Q_NMOS_GSD",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "pins": {
+      "1": "N_GATE",
+      "2": "GND",
+      "3": "NMOS_D"
+    },
+    "xy": [
+      110.49,
+      170.18
+    ],
+    "mpn": "2N7002Q-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "2N7002Q vendor subcircuit",
+    "note": ""
+  },
+  {
+    "ref": "Q103",
+    "value": "2N7002Q-7-F",
+    "library": "Transistor_FET:Q_NMOS_GSD",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "pins": {
+      "1": "TX_DOM",
+      "2": "GND",
+      "3": "P_GATE"
+    },
+    "xy": [
+      175.26,
+      170.18
+    ],
+    "mpn": "2N7002Q-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "2N7002Q vendor subcircuit",
+    "note": ""
+  },
+  {
+    "ref": "Q104",
+    "value": "MMBT3906-7-F",
+    "library": "Transistor_BJT:Q_PNP_BEC",
+    "footprint": "Package_TO_SOT_SMD:SOT-23",
+    "pins": {
+      "1": "PNP_BASE",
+      "2": "VTX",
+      "3": "N_DRIVE"
+    },
+    "xy": [
+      240.03,
+      170.18
+    ],
+    "mpn": "MMBT3906-7-F",
+    "manufacturer": "Diodes Incorporated",
+    "model": "DI_MMBT3906 vendor model",
+    "note": ""
+  },
+  {
+    "ref": "R104",
+    "value": "100k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "TX_DOM",
+      "2": "GND"
+    },
+    "xy": [
+      175.26,
+      204.47
+    ],
+    "mpn": "RC0805FR-07100KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R105",
+    "value": "10k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "VTX",
+      "2": "P_GATE"
+    },
+    "xy": [
+      44.45,
+      204.47
+    ],
+    "mpn": "RC0805FR-0710KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R106",
+    "value": "10k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "P_GATE",
+      "2": "PNP_BASE"
+    },
+    "xy": [
+      209.55,
+      204.47
+    ],
+    "mpn": "RC0805FR-0710KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R107",
+    "value": "100k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "PNP_BASE",
+      "2": "VTX"
+    },
+    "xy": [
+      240.03,
+      204.47
+    ],
+    "mpn": "RC0805FR-07100KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R108",
+    "value": "220",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "N_DRIVE",
+      "2": "N_GATE"
+    },
+    "xy": [
+      275.59,
+      204.47
+    ],
+    "mpn": "RC0805FR-07220RL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R109",
+    "value": "10k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "N_GATE",
+      "2": "GND"
+    },
+    "xy": [
+      110.49,
+      204.47
+    ],
+    "mpn": "RC0805FR-0710KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R110",
+    "value": "100k",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "VTX",
+      "2": "GND"
+    },
+    "xy": [
+      309.88,
+      204.47
+    ],
+    "mpn": "RC0805FR-07100KL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R111",
+    "value": "360",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "TX_HI",
+      "2": "CCD_P"
+    },
+    "xy": [
+      44.45,
+      245.11
+    ],
+    "mpn": "RC0805FR-07360RL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "R112",
+    "value": "360",
+    "library": "Device:R",
+    "footprint": "Resistor_SMD:R_0805_2012Metric",
+    "pins": {
+      "1": "CCD_N",
+      "2": "TX_LO"
+    },
+    "xy": [
+      110.49,
+      245.11
+    ],
+    "mpn": "RC0805FR-07360RL",
+    "manufacturer": "YAGEO",
+    "model": "ideal R; 1% tolerance not yet swept",
+    "note": ""
+  },
+  {
+    "ref": "JP101",
+    "value": "TX POWER - REMOVE FOR P0",
+    "library": "Connector_Generic:Conn_01x02",
+    "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+    "pins": {
+      "1": "5V",
+      "2": "VTX"
+    },
+    "xy": [
+      309.88,
+      170.18
+    ],
+    "mpn": "TSW-102-07-G-S",
+    "manufacturer": "Samtec",
+    "model": "open/closed ideal bench supply in simulation",
+    "note": "Populate header; leave shunt absent. Not an authorization to drive a vehicle."
+  }
+]

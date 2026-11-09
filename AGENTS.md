@@ -1,6 +1,6 @@
 # Engineering rules
 
-- Treat the vehicle bus as safety-critical. P0 capture is receive-only. If isolated-bench transmit stages are designed, keep them unpopulated and physically inhibited by a normally-open hardware link.
+- Treat the vehicle bus as safety-critical. P0 capture is receive-only. The owner authorized a fully connected, populated CCD transmit circuit for future bench work, inhibited by a removable, normally-open hardware jumper. Keep the jumper absent in the P0 vehicle assembly. This does not authorize vehicle transmission.
 - Never connect to the vehicle until every used protocol-specific interface is high impedance, protected, and validated on a bench.
 - No unverified bias, termination, frame identifiers, signal encodings, or radio behavior. Label confidence and cite evidence.
 - Distinguish CCD from PCI/J1850 VPW; do not reuse physical layers or timings across them.
@@ -21,6 +21,9 @@
 - The ChryslerScanner and CCDBusTransceiver projects are GPL-3.0 references. Reuse their enclosure/connector ideas and cited facts, not their circuit artwork or code, unless license compatibility is reviewed.
 - Local EDA tools found on this workstation: KiCad 10.0.7 CLI at `C:\Program Files\KiCad\10.0\bin\kicad-cli.exe`; FreeRouting 2.5.0 at `%LOCALAPPDATA%\freerouting\freerouting.exe`. Check the existing install before downloading or reinstalling. Export/import through the project’s KiCad/FreeRouting handoff files and rerun KiCad DRC after importing routes.
 - FreeRouting output is a routing proposal, not a manufacturing sign-off. Review the imported board in KiCad, inspect clearances and copper, run DRC, and keep unresolved electrical assumptions visible. Never fabricate or connect an unreviewed board to the vehicle.
+- LTspice 26.1.1 is installed at `C:\Program Files\ADI\LTspice\LTspice.exe`; KiCad supplies ngspice 46. Check installed tools before reinstalling. Manufacturer models may work in only one simulator: the LM5164-Q1 fixture regulates in LTspice but failed in ngspice. A completed solver run is not a passing test; require every expected measurement and its limits.
+- Current CCD subsystem source: `hardware/tools/build_ccd_frontend.py`, generating native KiCad files and bench BOM exports. Reconcile direct KiCad edits before regenerating. Run the exported-netlist comparison and ERC after changes. The old carrier is superseded; the front-end sheet is not a complete protected board.
+- Do not clamp CCD inputs to local positive supply rails without evaluating the unpowered tap. An open transmit-power jumper must be modeled as floating with actual bleeds/leakage, not forcibly grounded. Vendor SPICE models do not establish worst-case leakage, destructive-transient survival, or component qualification.
 
 ## Vehicle year and manual authority
 

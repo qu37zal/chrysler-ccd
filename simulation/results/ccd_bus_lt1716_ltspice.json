@@ -1,0 +1,52 @@
+{
+  "netlist": "ccd_bus_lt1716.cir",
+  "synthetic": true,
+  "netlist_sha256": "b83f1456fdf6064bc0c3c234d8b3503b56af6cd05147b787d01fa031461b697e",
+  "simulator": "LTspice 26.1.1 for Windows",
+  "completed": true,
+  "checks": {
+    "diff_idle": {
+      "value": -0.0229706410319,
+      "min": -0.05,
+      "max": -0.005,
+      "pass": true
+    },
+    "diff_dominant": {
+      "value": 0.463000684977,
+      "min": 0.2,
+      "max": 0.8,
+      "pass": true
+    },
+    "rx_idle": {
+      "value": 3.2999060154,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "rx_dominant": {
+      "value": 0.131804279915,
+      "min": -0.1,
+      "max": 0.4,
+      "pass": true
+    },
+    "diff_inhibited": {
+      "value": -0.0229706354439,
+      "min": -0.05,
+      "max": -0.005,
+      "pass": true
+    },
+    "rx_inhibited": {
+      "value": 3.2999060154,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "drive_current": {
+      "value": 0.00543557157293,
+      "min": 0.001,
+      "max": 0.01,
+      "pass": true
+    }
+  },
+  "pass": true
+}

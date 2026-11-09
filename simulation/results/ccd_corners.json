@@ -1,0 +1,463 @@
+{
+  "synthetic": true,
+  "scope": "Nominal models; external bench loads, not asserted vehicle limits",
+  "pass_all": true,
+  "cases": [
+    {
+      "netlist": ".corner_4.7_60_1n.cir",
+      "synthetic": true,
+      "netlist_sha256": "23f10e278e355e745b66b35027367b081709cb7ca7a3eccd6ebd0d7f6ea6dd40",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0115117952228,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.249028782951,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804302335,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0115117921265,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00571956039078,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 4.7,
+        "TERMINATION": 60,
+        "BUSCAP": "1n"
+      }
+    },
+    {
+      "netlist": ".corner_4.7_60_20n.cir",
+      "synthetic": true,
+      "netlist_sha256": "619eccb3f5952d3731440281916b4a4b5f818bbaf3967f6457911b87116da4f5",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0115117952228,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.249028787017,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804314765,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0115117914975,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00571899828124,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 4.7,
+        "TERMINATION": 60,
+        "BUSCAP": "20n"
+      }
+    },
+    {
+      "netlist": ".corner_4.7_120_1n.cir",
+      "synthetic": true,
+      "netlist_sha256": "5c2a57b9b199f4b04347c882d093e3aae38a9cbf56cc41afec6ee5905ef5a452",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0229706410319,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.463000686015,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804260228,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0229706366987,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.0054360492342,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 4.7,
+        "TERMINATION": 120,
+        "BUSCAP": "1n"
+      }
+    },
+    {
+      "netlist": ".corner_4.7_120_20n.cir",
+      "synthetic": true,
+      "netlist_sha256": "a56cd2280ced16722b15d0cc2a2264c026a26746d79b345cee77e00c7d39db0a",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0229706410319,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.463000684977,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804290741,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0229706354439,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00543570515579,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 4.7,
+        "TERMINATION": 120,
+        "BUSCAP": "20n"
+      }
+    },
+    {
+      "netlist": ".corner_5.15_60_1n.cir",
+      "synthetic": true,
+      "netlist_sha256": "258363a05d876e730af69d5b9a488ed3b91fc3ec559cc63b399bd3bf7bcb609a",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0115117952228,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.282311145323,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804329583,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0115117924288,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00643115154162,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 5.15,
+        "TERMINATION": 60,
+        "BUSCAP": "1n"
+      }
+    },
+    {
+      "netlist": ".corner_5.15_60_20n.cir",
+      "synthetic": true,
+      "netlist_sha256": "d1a0662878542d601cf429cc3dcc50207f55c0f039822e3a292a20442f8cb863",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0115117952228,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.282311171293,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804305521,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0115117914975,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00643051637862,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 5.15,
+        "TERMINATION": 60,
+        "BUSCAP": "20n"
+      }
+    },
+    {
+      "netlist": ".corner_5.15_120_1n.cir",
+      "synthetic": true,
+      "netlist_sha256": "e38b8e5502ce74aef7b0a9925dc582205f0d39799259668e62c6ced630d82500",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0229706410319,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.52474886179,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804249201,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0229706357809,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00610743343695,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 5.15,
+        "TERMINATION": 120,
+        "BUSCAP": "1n"
+      }
+    },
+    {
+      "netlist": ".corner_5.15_120_20n.cir",
+      "synthetic": true,
+      "netlist_sha256": "21d5d2381d4b209bc92ddd06fe625efbd6ec2cf2c3ee13c1d5f60963ed73863a",
+      "simulator": "LTspice 26.1.1 for Windows",
+      "completed": true,
+      "checks": {
+        "diff_idle": {
+          "value": -0.0229706410319,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "diff_dominant": {
+          "value": 0.52474886179,
+          "min": 0.2,
+          "max": 0.8,
+          "pass": true
+        },
+        "rx_idle": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "rx_dominant": {
+          "value": 0.131804327278,
+          "min": -0.1,
+          "max": 0.4,
+          "pass": true
+        },
+        "diff_inhibited": {
+          "value": -0.0229706354439,
+          "min": -0.05,
+          "max": -0.005,
+          "pass": true
+        },
+        "rx_inhibited": {
+          "value": 3.2999060154,
+          "min": 2.8,
+          "max": 3.5,
+          "pass": true
+        },
+        "drive_current": {
+          "value": 0.00610812876394,
+          "min": 0.001,
+          "max": 0.01,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "parameters": {
+        "VDRIVE": 5.15,
+        "TERMINATION": 120,
+        "BUSCAP": "20n"
+      }
+    }
+  ]
+}

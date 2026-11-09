@@ -1,85 +1,76 @@
-# P0 CCD sniffer: preliminary BOM and stretch-channel plan
+# P0 parts selection
 
-**Revision status:** architecture and part-selection draft, 2026-11-09. Not released for fabrication or vehicle use. The current `p0_carrier` board is an earlier carrier-only study and does not implement these circuits.
+Updated 2026-11-09. The CCD subsystem now has a connected native KiCad schematic,
+25 fitted components and a 14-line grouped bench purchase list. These are not
+the complete board BOM or a fabrication release.
 
-## Scope
+- [Selected components and exact orderables](../hardware/kicad/p0_frontend/components.json)
+- [DigiKey / Mouser purchase exports and instructions](../hardware/bom/README.md)
+- [Connected schematic and rebuild/check procedure](../hardware/kicad/p0_frontend/README.md)
+- [SPICE fixtures, results and limits](../simulation/README.md)
 
-P0 core is a receive-only CCD sniffer on the Prowler's J1962 diagnostic connector. The first board needs the CCD differential front end, ESP32-S3, USB/Wi-Fi interface, and protected power. Other DLC physical layers, J1962 pass-through operation, and active request/reply capture are stretch goals. The capture schema keeps a `thread` field so those can be added later without changing stored records. The first web UI can show the CCD thread; per-thread tabs and a combined timeline become useful when stretch channels exist. No transmit path is populated in the P0 assembly.
+## Selected CCD bench parts
 
-The ChryslerScanner V2.1.0 pin table is a useful candidate inventory: pin 2 PCI/VPW; pins 3/11 CCD+/-; pins 6, 7, 9, 12, 14, 15 SCI; pins 4/5 grounds; pin 16 battery. These are **reference-derived candidates**, not verified Prowler wiring facts. Elvira is a 2000 Prowler. Use the archived 1999 factory information as a working carryover reference, then vet critical details against the owner's paper 2000 manual and physical DLC before connection. Pins not verified as data remain disconnected from signal circuitry.
+| Function | Selection | Qty |
+|---|---|---:|
+| Differential receive | LT1716HS5#TRMPBF at 3.3 V | 1 |
+| P-channel drive | BSS84Q-7-F | 1 |
+| N-channel drive / gate control | 2N7002Q-7-F | 2 |
+| Gate level shift | MMBT3906-7-F | 1 |
+| Blocking / negative clamps | BAV21W-7-F | 4 |
+| Input filter | 47 kOhm / 22 pF per conductor | 2 pairs |
+| Drive limiting | 360 Ohm per branch | 2 |
+| TX inhibit | TSW-102-07-G-S header; shunt absent for P0 | 1 |
+| Other passives | Exact values/orderables in component inventory and CSVs | 9 |
 
-## Candidate channel matrix
+The owner authorized populated, connected TX hardware with a removable inhibit.
+P0 firmware stays receive-only; vehicle transmission is not authorized. No onboard
+CCD bias or termination is fitted. Bench bias/load parts exist only in simulation.
 
-| Thread | Candidate DLC contacts | Candidate receiver | Current confidence | Notes |
-|---|---|---|---|---|
-| CCD | 3 (+), 11 (-) | Differential comparator receiver, high impedance, no bus bias/termination | Core target; verify connector and analog details before vehicle connection | First capture target. Dedicated differential front end and receiver output. |
-| PCI / J1850 VPW | 2 | Separate automotive-tolerant single-wire receiver | Stretch; candidate pin mapping only | Distinct physical layer. Do not reuse CCD analog front end. |
-| SCI-A RX (PCM) | 6 | Separate protected single-wire receiver | Stretch; unverified on Prowler | Candidate line from ChryslerScanner; voltage and baud need vehicle-specific confirmation. |
-| SCI-A TX (PCM/TCM) | 7 | Separate protected receive-only tap | Stretch; unverified on Prowler | Monitor only if confirmed populated. |
-| SCI-B RX (TCM) | 9 | Separate protected single-wire receiver | Stretch; unverified on Prowler | Monitor only if confirmed populated. |
-| SCI-B RX (PCM) | 12 | Separate protected single-wire receiver | Stretch; unverified on Prowler | Monitor only if confirmed populated. |
-| SCI-A RX (TCM) | 14 | Separate protected single-wire receiver | Stretch; unverified on Prowler | Monitor only if confirmed populated. |
-| SCI-B TX (TCM) | 15 | Separate protected receive-only tap | Stretch; unverified on Prowler | Monitor only if confirmed populated. |
+LT1716 supersedes the earlier TLV3212-Q1/TLV1701 candidates because it tolerates
+inputs above its own supply. Positive clamps into local rails are rejected: they
+can load an unpowered tap. Ground-referenced positive transient protection and
+input-resistor fault ratings remain open. Generic H-grade LT1716 is a 125 C part;
+automotive #W qualification belongs to a different orderable. The family model
+is not evidence of either qualification.
 
-For the full-DLC stretch goal, “all data available” means every populated data conductor selected for capture gets its own front end and capture thread. It does not mean the standardized DLC exposes every in-vehicle network, nor that unknown contacts should be probed or driven.
+## Remaining board selections
 
-## Signal and power partition
+| Block | Leading choice | Remaining work |
+|---|---|---|
+| Buck | LM5164QDDARQ1, 100 V / 1 A | Vendor model passes in LTspice, fails in ngspice; complete protected power path and rail optimization remain. |
+| Inductor | Coilcraft MSS1246T-683MLB, 68 uH | TI reference part; 170 mOhm DCR modeled; saturation, thermals and layout checks remain. |
+| 3.3 V LDO | TLV76701DGNR | Load-step model passed; thermal copper and full supply chain remain. |
+| Fuse | Littelfuse 0451001.MRL candidate | Inrush and protection coordination. |
+| Reverse battery / supply OR | Rated Schottky devices, orderables pending | USB/vehicle backfeed and startup/fault model. |
+| Input transient clamp | SMBJ33A class candidate | Energy, source impedance and fuse coordination; no load-dump qualification claimed. |
+| MCU | ESP32-S3; compact module option under review | Existing DevKit remains useful for bench work. Final footprint/power integration pending. |
+| USB | Native S3 USB with Type-C / ESD | GCT USB4105 footprint family available; exact orderable and height pending. Two separate 5.1 kOhm CC resistors required. |
 
-```mermaid
-flowchart LR
-  DLC[J1962 male connector]
-  CCD[Contacts 3 and 11<br/>CCD protection + differential comparator]
-  VPW[Stretch: contact 2<br/>separate VPW/PCI receiver]
-  SCI[Stretch: contacts 6, 7, 9, 12, 14, 15<br/>independent SCI receivers]
-  MCU[ESP32-S3<br/>CCD edge capture; thread IDs reserved]
-  USB[USB-C<br/>ESD protection + USB CDC]
-  WEB[Wi-Fi AP<br/>one web tab per capture thread]
-  VIN[Contact 16<br/>fuse + reverse/transient protection + buck]
-  EN[Future request/reply stages<br/>DNP; outside P0 core]
-  DLC --> CCD --> MCU
-  DLC --> VPW --> MCU
-  DLC --> SCI --> MCU
-  MCU --> USB
-  MCU --> WEB
-  DLC --> VIN --> MCU
-  EN -. hardware inhibit .- DLC
-```
+## OBD connector
 
-Each receiver output remains a separate MCU input and gets a stable `thread` ID in raw captures. UI tab selection changes only what is displayed; it never filters data out of stored/exported captures. Connector signal grounds, chassis ground, protected supply, and logic ground are distinct nets until their intentional connection points are designed.
+The delegated purchasable sample candidate is Renhotec BSA-OBDM-R, seller MPN
+id-561910452708, [listed in stock by Metabee](https://www.metabee.com/product-detail/obd2-16pin-male-gold-plated-connector-with-right_8777).
+Its title says right angle while its attributes say straight. A full drawing or
+measured sample is needed before releasing the footprint. No purchase/inquiry sent.
 
-## Parts and selection status
+[Macchina CCBDM20](https://www.macchina.cc/catalog/parts/obd2-male-right-angle-pth-connector)
+has drawing/STEP data but shows Notify Me. Drawing: 4 mm pin pitch, 2.65 mm PCB-tail
+row spacing, not a generic 2.54 mm header. The upstream OBD2-90 is a footprint name,
+not a supplier part number. [SparkFun DEV-09911](https://www.sparkfun.com/obd-ii-connector.html)
+is purchasable but inspected photos show solder tabs/cups, suitable for a short-wire
+case-mounted fallback rather than the requested PCB-tail connector.
 
-| Ref. | Qty. | Proposed part / class | Status |
-|---|---:|---|---|
-| CN1 | 1 | Macchina CCBDM20 right-angle male J1962 plug, or equivalent with supplied mechanical drawing | Candidate selected for a board-edge plug form factor. Mechanical drawing identifies a 16-pin, 30 V, 5 A connector and dimensions; obtain/measure the actual part before footprint release. The ChryslerScanner V1.44 BOM calls its own footprint `OBD2-90` but does not identify the vendor part. |
-| U1 | 1 | ESP32-S3-DevKitC-1 v1.1 for prototype; later ESP32-S3 module | Existing board carrier choice; separate GPIO/timestamp input per receiver. Wi-Fi AP and local web UI. |
-| U2 | 1 | USB-C ESD protector, e.g. USBLC6-2SC6 | Reference BOM precedent; verify USB wiring and device-side ESD placement. |
-| U3 | 1 | Automotive buck regulator, 12 V DLC to 5 V | Not selected. Must be chosen with input/transient/reverse-polarity protection and a documented current budget. The ChryslerScanner's TD1509P5 is a reference, not adopted. |
-| F1, D1, TVS1 | 1 each | Input fuse/current limiter, reverse battery protection, and automotive transient clamp | Required if powered from DLC pin 16; exact network and ratings open pending power budget and transient design. |
-| U4 | 1 | TI TLV1701-Q1 single comparator, `TLV1701QDBVRQ1` (SOT-23-5) candidate for CCD differential polarity sensing | Active automotive comparator family; rail-to-rail input and open-collector output. It is not a CCD transceiver. Differential threshold/reference, hysteresis, ESD and bus loading still require a reviewed circuit and bench validation. |
-| U5-U6 | 0 populated in P0; 2 for stretch | TI TLV1704-Q1 quad comparator, `TLV1704QPWRQ1` (TSSOP-14), candidate for independent VPW/SCI receive channels | Stretch-only candidate. Not required for first CCD capture. Each added physical layer needs its own reviewed input conditioning and verified pin map. |
-| R/C/D input network | per channel | Series impedance, line-specific divider/clamp, reference and hysteresis components | Values intentionally TBD until each voltage range is sourced and circuit bench-tested. A first-order 100 kOhm/47 kOhm divider is only a calculation starting point for lines whose high level supports it; it is not a released value or protection network. No shared analog input across different bus types. |
-| RPU1..n | one per logic output | 3.3 V pull-up for open-drain comparator output, where required | Choose after comparator output type and ESP32 input circuit are set; do not pull any ESP32 pin to vehicle voltage. |
-| JP_TX_CCD, JP_TX_VPW, JP_TX_SCIx | zero populated in P0; later, one per driver | Physical transmit-inhibit links | Request/reply behavior is future work. If isolated-bench drivers are later added, each must have a physical inhibit; any vehicle transmission additionally requires reviewed behavior and explicit user authorization. |
-| U8..n, Qx | DNP / later | Protocol-specific transmit drivers | Outside P0 core. The user-suggested CCD complementary MOSFET stage does not apply to SCI/VPW. |
-| LED1..3 | 3 | Power, capture, fault/status LEDs | Candidate; current limit and GPIO mapping TBD. |
-| TP1..n | 1 set | Battery input, protected rails, logic ground, each bus input, comparator references/outputs | Include at safe, serviceable locations. Label signals and keep them accessible in the enclosure. |
-| JUSB1 | 1 | USB-C receptacle or strain-relieved pigtail | Select to match ESP32-S3 USB implementation and enclosure. Include correct CC resistors unless already present on the chosen module. |
-| H1 | 1 | 3D-printed enclosure, connector support and strain relief | Fit-check after exact connector and PCB dimensions are verified. |
+## Scope and reference clues
 
-## ChryslerScanner V1.44 BOM review
+Saved 2000 radio wiring traces CCD to DLC 3/11. Vet cavity view/orientation,
+grounds and power before installation. Elvira is a 2000; archived 1999 literature
+is a working carryover reference. PCI/VPW 2 and SCI 6/7/9/12/14/15 remain separate,
+unverified stretch candidates and are excluded from this core purchase list.
 
-The V1.44 BOM contains useful clues: `OBD2-90` J1962 connector footprint, SS34 power diodes, LM2576S-5.0 buck, ESDCAN24-2BLY, AO3400/AO3401 MOSFETs, IRF7317 dual MOSFET, 74HC4066 switches, USBLC6-2SC6, LM393D, status LEDs, and extensive passives. It is a multi-protocol active scanner. We borrow the edge-connector concept and investigate the cited protection/switch/transceiver parts; we do not copy its circuit or assume its values/topology are safe for this design. It is GPL-3.0, so no source artwork/code is copied into this project.
-
-The V2.1.0 schematic describes separate CCD, PCI/VPW, and SCI circuits and makes the candidate pin map above explicit. It also uses switchable active interfaces and diagnostics beyond our initial scope. The precise V2.1 J1962 connector manufacturer/footprint is not identified in the extracted material; the old BOM's `OBD2-90` is only a library footprint name.
-
-## Required implementation before purchase/fab
-
-1. Develop the CCD contact map and electrical limits from the archived 1999 factory manual, recording its page references and the assumed carryover to Elvira (2000). Vet critical details against the paper 2000 manual as needed for design decisions. Pin 4 chassis ground and pin 5 signal ground remain separately identified.
-2. Select actual connector and obtain its full pin-layout drawing/STEP; create and inspect its custom footprint against the physical part. The current 88 x 38 mm carrier and generic pigtail header are not the final board.
-3. Design and validate the CCD differential receiver first, including protection, input impedance, switching threshold, hysteresis, polarity, logic output and test points.
-4. Build the receive-only P0 core and validate it with an isolated signal source and current-limited supply; measure bus loading and timing before vehicle connection.
-5. Defer separate VPW/SCI receive channels, pass-through hardware, and request/reply functions to stretch work. When added, keep each physical layer independent and give it a distinct capture thread and UI tab.
-6. Select protected power and verify startup, cranking envelope, reverse battery, and transient behavior before DLC pin 16 is connected.
-
-The present CAD remains preliminary. Do not order the proposed comparator/MOSFET circuit from the BOM alone. Do not populate or enable transmit hardware for vehicle use.
+ChryslerScanner's BOM includes SS34, LM2576S-5.0, ESDCAN24-2BLY, AO3400/AO3401,
+IRF7317, 74HC4066, USBLC6-2SC6 and LM393D. CCDBusTransceiver V1.03 shows differential
+receive and complementary drive through 360 Ohm branches. Their GPL-3.0 artwork
+and code are not copied. The independent design does not adopt their switched
+bias/termination or heavy direct bus capacitance. No obsolete IRF7317 or proprietary
+4632650 is selected. The old p0_carrier is superseded and not a complete P0 board.

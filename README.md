@@ -14,6 +14,9 @@ P0's core target is a passive CCD capture from the verified Prowler DLC pair. Ot
 - `tests`, `fixtures`: synthetic-only protocol and analysis tests/captures.
 - `docs`: requirements, safety procedures, architecture decisions, source inventory and hardware notes.
 - `config/p0_threads.json`: machine-readable core CCD thread and stretch candidate DLC thread map. Candidate non-CCD contacts remain unverified for the Prowler.
+- `hardware/kicad/p0_frontend`: connected 25-component CCD receiver and jumper-inhibited bench transmitter schematic; not yet a complete protected P0 board.
+- `hardware/bom`: grouped DigiKey/Mouser bench purchase CSVs, with supply and completeness notes.
+- `simulation`: manufacturer-model SPICE experiments, explicit measurement limits and synthetic results. LTspice is required for the current LT1716 model and successful LM5164 fixture.
 - `hardware/kicad/p0_carrier`: earlier editable carrier/layout study for the ESP32-S3-DevKitC-1. It uses a generic pigtail header and has no bus receiver circuit; it is superseded by the CCD-core P0 plan in `docs/p0-bom.md` and ADR 0004. It is not a complete electrical interface or vehicle-ready PCB.
 - `docs`: requirements, safety procedures, architecture decisions, source inventory and hardware notes.
 

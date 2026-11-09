@@ -1,0 +1,19 @@
+* TLV76701 3.296 V regulator, synthetic source and load
+.include models/TLV76701_TRANS.lib
+VIN vin 0 PWL(0 0 10u 4.7 20m 4.7)
+XU vin fb 0 vin vout TLV76701_TRANS
+CIN vin 0 4.7u
+COUT vout out_esr 22u
+RESR out_esr 0 0.02
+RF1 vout fb 31.2k
+RF2 fb 0 10k
+RLOAD vout 0 33
+ILOAD vout 0 PULSE(0 0.4 5m 1u 1u 5m 20m)
+.options method=gear reltol=0.003 abstol=1n vntol=1u
+.tran 200n 15m 0 200n
+.meas TRAN vout_light AVG V(vout) FROM=3m TO=4m
+.meas TRAN vout_heavy AVG V(vout) FROM=8m TO=9m
+.meas TRAN vout_min MIN V(vout) FROM=4m TO=10m
+.meas TRAN vout_max MAX V(vout) FROM=4m TO=11m
+.save V(vout) V(vin)
+.end

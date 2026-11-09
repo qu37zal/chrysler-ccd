@@ -1,0 +1,25 @@
+* Synthetic isolated CCD bench fixture. Bias and termination are NOT PCB parts.
+.include ccd_frontend.lib
+V5 v5 0 4.7
+V3 v3 0 3.3
+VBIAS bias5 0 5
+RBIASNEG bias5 ccdn 13k
+RBIASPOS ccdp 0 13k
+RTERM ccdp ccdn 120
+CBUSP ccdp 0 5n
+CBUSN ccdn 0 5n
+VTX vtx 0 PWL(0 0 1m 0 1.001m 4.7 3m 4.7 3.001m 0 5m 0)
+VDOM dom 0 PWL(0 0 1.2m 0 1.2001m 3.3 1.4m 3.3 1.4001m 0 3.2m 0 3.2001m 3.3 3.4m 3.3 3.4001m 0 5m 0)
+XCCD ccdp ccdn v5 v3 dom rx vtx CCD_FRONTEND
+EDIFF diff 0 ccdp ccdn 1
+.options method=trap reltol=0.003 vntol=1u abstol=1n gmin=1e-10
+.tran 100n 5m 0 100n
+.meas TRAN diff_idle FIND V(diff) AT=0.9m
+.meas TRAN diff_dominant FIND V(diff) AT=1.3m
+.meas TRAN rx_idle FIND V(rx) AT=0.9m
+.meas TRAN rx_dominant FIND V(rx) AT=1.3m
+.meas TRAN diff_inhibited FIND V(diff) AT=3.3m
+.meas TRAN rx_inhibited FIND V(rx) AT=3.3m
+.meas TRAN drive_current FIND I(VTX) AT=1.3m
+.save V(ccdp) V(ccdn) V(diff) V(rx) V(dom) V(vtx) I(VTX)
+.end

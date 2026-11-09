@@ -54,3 +54,30 @@ Project: [qu37zal/chrysler-ccd](https://github.com/qu37zal/chrysler-ccd). Availa
 | Operation CHARM | https://www.operationcharm.com/ | Service literature access; model-year/manual access to verify | Pending |
 
 The 1999 service manual is already present in the Drive archive linked above. Its Prowler CCD page and diagrams are the working design reference for the core hardware; applicability to Elvira (2000) is a carryover assumption until critical details are checked against the paper 2000 factory manual. The repository still needs to record exact scan/page identifiers for the DLC contact drawing and relevant 1999 wiring sheets in the signal dictionary; use the generic ChryslerScanner/Snap-on pin maps only as cross-checks. The separate SCI/PCI contacts remain stretch-scope candidates until the archived Prowler pages confirm them.
+
+## Component/model audit, 2026-11-09
+
+| Source | URL | Finding / use | License or limitation |
+|---|---|---|---|
+| CCDBusTransceiver source revision | https://github.com/laszlodaniel/CCDBusTransceiver/tree/b09ca638fadae32966ab4e311357212c215a7506 | V1.03/V3.00 PDFs inspected; V1.03 shows 360 Ohm drive branches, LM393 receive, selectable bias/termination and direct bus capacitance. Independent current circuit omits its bias/termination and heavy bus capacitance. | GPL-3.0; artwork/code not copied. |
+| ADI LT1716 | https://www.analog.com/en/products/lt1716.html | Production family; above-supply inputs. Leading receiver candidate at 3.3 V. | Manufacturer documentation, not a CCD-specific certification. |
+| LT1716 datasheet Rev B | https://www.analog.com/media/en/technical-documentation/data-sheets/LT1716.pdf | Pin 1 OUT, 2 V-, 3 IN+, 4 IN-, 5 V+. H grade -40..125 C; C/I only -40..85 C. Automotive #W is distinct. Above-supply/unpowered bias envelope must be checked beyond nominal model. | ADI copyright; model not redistributed. |
+| LM5164-Q1 | https://www.ti.com/product/LM5164-Q1 | 100 V / 1 A regulator candidate; use official pinout and application guidance. | TI documentation. |
+| LM5164-Q1 model | https://www.ti.com/lit/zip/snvmbp2 | Unencrypted PSpice transient model. LTspice fixture passed; ngspice fixture failed. RON resistor goes to ground. | Vendor terms; local-only model cache. |
+| TLV767 | https://www.ti.com/lit/ds/symlink/tlv767.pdf | TLV76701DGNR adjustable 1 A LDO candidate. DGN: 1 OUT, 2 FB, 3/7 NC, 4/6 GND, 5 EN, 8 IN, thermal pad to ground plane. | TI documentation. |
+| TLV76701 model | https://www.ti.com/lit/zip/slvmcy1 | Nominal load-step fixture passed in ngspice. | Vendor terms; no thermal verification. |
+| 2N7002Q model | https://www.diodes.com/spice/download/4577/2N7002Q.spice.txt | N-channel model; D/G/S subcircuit order is not physical G/S/D package order. | Preserve vendor notices; not redistributed. |
+| BSS84Q model | https://www.diodes.com/spice/download/4685/BSS84Q.spice.txt | P-channel vendor model for current-limited drive. | Preserve vendor notices; not redistributed. |
+| MMBT3906 model | https://www.diodes.com/spice/download/2962/MMBT3906.spice.txt | PNP model for 3.3 V control / 5 V gate drive. | Preserve vendor notices; not redistributed. |
+| BAV21W model | https://www.diodes.com/spice/download/1527/BAV21W.spice.txt | File declares DI_BAV21WS, contains VCJO parameter. Local derivative changes only VCJO to CJO. Track uncertainty instead of claiming exact model/package correspondence. | Original and patched hashes recorded; no redistribution. |
+| Renhotec sample candidate | https://www.metabee.com/product-detail/obd2-16pin-male-gold-plated-connector-with-right_8777 | BSA-OBDM-R, seller MPN id-561910452708, listed in stock. Title says right angle, attributes straight; no verified tail-layout drawing. | Orderable sample lead, not footprint approval. |
+| Macchina connector | https://www.macchina.cc/catalog/parts/obd2-male-right-angle-pth-connector | CCBDM20 Notify Me; drawing/STEP inspected. 4 mm pitch, 2.65 mm PCB-tail row spacing. | Drawing https://www.macchina.cc/sites/default/files/CCBDM20.pdf ; verify actual sample. |
+| SparkFun connector | https://www.sparkfun.com/obd-ii-connector.html | DEV-09911 purchasable; backside images show solder tabs/cups, not the requested right-angle PCB tails. | Short-wire/case-mount fallback only. |
+| DigiKey myLists | https://www.digikey.com/en/mylists/lists | Official list upload / parts management entry point. | Review exact matches and current stock before ordering. |
+| Mouser FORTE | https://www.mouser.com/en/bomtool/ | Official spreadsheet BOM importer and purchasing workflow. | Review suggested substitutes; no cart/order made. |
+| Mouser Price & Availability | https://www.mouser.com/en/price-availability/ | Explicit CSV upload and manufacturer-part-number support. | Manufacturer MPNs used in purchase exports. |
+
+Local model hashes, synthetic measurement results and reproduction commands are
+in simulation/. The files there do not establish live bus loading, electrical
+qualification, temperature corners, ESD or load-dump survival. Stock observations
+are dated supplier-page observations rather than guaranteed inventory.

@@ -1,0 +1,12 @@
+{
+  "synthetic_results_model_cache": {
+    "LT1716.lib": "48fe50a9312ef05c1232e668abdb64dc98a2edec2c5c32d5a2c2489147f16cd7",
+    "2N7002Q.lib": "e0c52f908f8418b081d697a8a5ae12a7ac1416c53acb8fc375be83d1d61cd922",
+    "BSS84Q.lib": "c170ea29cc3b673f0c98853b2dfa0870ddc811509a8609c6406842d5bde185d8",
+    "MMBT3906.lib": "73f2a9821841a0d19e6b5330f2b030d4cee974dbb4445947534fd4f4dfefddab",
+    "BAV21W.lib": "00d38cdf14b8e148c58d6698f357c0cc2616ec68a88f06f7d3e794b57b8ec145",
+    "BAV21W-ngspice.lib": "eca1d2c6f4a726ce0fef291f2a28c6d53e84ff271f794719c3df8d4810227aa1",
+    "LM5164-Q1_TRANS.LIB": "e11ddf6995163f98eda6205de6a7cb74c8a3982b7328467de8d806286e894b5d",
+    "TLV76701_TRANS.lib": "8dc150de2dfdf2e7562dd0656970ffc7750537d0f88966fc4f776bf5f71a2e2a"
+  }
+}

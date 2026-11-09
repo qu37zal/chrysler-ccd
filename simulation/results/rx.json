@@ -1,0 +1,32 @@
+{
+  "netlist": "rx.cir",
+  "synthetic": true,
+  "simulator": "stdout ** ngspice-46 shared library",
+  "errors": [],
+  "measurements": {
+    "rx_idle": 3.3,
+    "rx_dominant": 0.10338,
+    "rx_return": 3.3
+  },
+  "checks": {
+    "rx_idle": {
+      "value": 3.3,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    },
+    "rx_dominant": {
+      "value": 0.10338,
+      "min": -0.1,
+      "max": 0.4,
+      "pass": true
+    },
+    "rx_return": {
+      "value": 3.3,
+      "min": 2.8,
+      "max": 3.5,
+      "pass": true
+    }
+  },
+  "pass": true
+}
