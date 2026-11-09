@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it as software."
+title: "Chrysler CCD"
+repository-code: "https://github.com/qu37zal/chrysler-ccd"
+abstract: "Open platform for Chrysler CCD bus exploration, capture, decoding and isolated module emulation."
+keywords:
+  - Chrysler CCD
+  - automotive diagnostics
+  - embedded systems
+  - bus analysis
+license: "NOASSERTION"
