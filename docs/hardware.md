@@ -16,6 +16,7 @@ Review of the supplied comparator/MOSFET/KEY-input BOM notes is recorded in [Gem
 | OBD | Reversible breakout; CCD candidate at DLC 3/11; grounds 4/5; protected supply 16; survey all populated signal pins | Prowler-specific pin map required; no connection yet |
 | OBD enclosure connector | Automotive 16-pin J1962 male plug with fully wired 16-pin female pass-through | Preserve straight-through continuity for all pins and add only high-impedance monitoring taps. Verify there are no shorts, cross-connects, or monitor loading on unrelated pins. |
 | Power | Automotive input protection, reverse polarity, surge suppression, buck to 5V/3V3 | Design pending crank/transient requirements |
+| P1 reverse-camera trigger | Protected automotive high-side switch, e.g. TI TPS1H200A-Q1 | Study candidate only. ACTIVE, AEC-Q100, 3.4–40 V supply, protected switch. Confirm Android trigger input voltage/current and fault behavior before choosing current limit, series protection or schematic. Output defaults low. Not part of receive-only P0. |
 | Debug | USB-C, status LEDs, test points for bus+/-, receiver output, 3V3 and ground | Preliminary |
 
 Power-up must default to receiver-only; omit TX path and bus bias/termination. Isolate MCU ground and vehicle ground only per verified design. Validate bus input loading on a bench before vehicle connection. The enclosure should expose a fully wired/pass-through OBD-II connection while the sniffer monitors CCD at DLC pins 3 and 11. Establish exact connector/passthrough semantics and all-pin behavior before mechanical design.
@@ -23,6 +24,8 @@ Power-up must default to receiver-only; omit TX path and bus bias/termination. I
 ## Network and interaction scope
 
 Initial P0 uses the ESP32-S3 as a local 2.4 GHz Wi-Fi access point with a browser GUI for device status, configuration, live traffic and capture export. Protect the AP with a configurable password; no internet/cloud service is needed. Bluetooth and a native iOS app are deferred. “Sniff all data” means passively record every decodable transmission on each populated, vehicle-accessible diagnostic line at the DLC. CCD is a two-wire differential bus at pins 3/11; Chrysler diagnostic tools also support SCI through separate DLC pins on some applications, so P0 must inventory the Prowler's actual populated signal pins and their transceivers before declaring coverage. Passive receive cannot reveal query/response data that is not transmitted until a scan tool asks for it. Do not actively query in the first milestone.
+
+P0 captures are expected to support P1 discovery of BCM volume-offset levels, vehicle speed, steering events and transmission range. P0 itself remains receive-only and does not connect to the Android head unit. P1 uses an adapter harness behind the head unit. The reverse-camera request is a separate P1 output: raise the Android unit's measured reverse-trigger input to a protected 12 V source only while a fresh, validated CCD transmission-range signal says Reverse. Use a protected automotive high-side stage with default-off behavior in hardware; go low immediately on stale/invalid data, reset or power loss. Do not connect this output to the OEM reverse lamps. Verify the Android unit's trigger voltage/current and reference before designing the output circuit.
 
 ## Enclosure requirements
 

@@ -11,11 +11,12 @@
 9. **P0:** Mechanically define enclosure and OBD J1962 male/female pass-through semantics, pin continuity and strain relief before CAD/printing.
 10. **P0:** Implement stationary event annotation and deterministic capture correlation report; preserve full provenance.
 11. **P0:** First genuine Prowler capture only after steps 1–6; use passive receiver(s) on verified DLC pins, stationary vehicle, no scan-tool transmission.
-12. **P0:** Verify vehicle speed, steering controls, selector and lighting/reverse associations with repeated controlled stationary or safe offline captures.
+12. **P0:** Verify vehicle speed, steering controls, autovolume offset, selector, transmission range (especially Reverse), and lighting associations with repeated controlled stationary or safe offline captures. P0 collects signals passively for later P1 use.
 13. **Later:** Bluetooth and native iOS app, after P0 capture integrity and local web UX are established.
 14. **Bench emulation:** Establish isolated virtual CCD bus and OEM radio request/response/periodic behavior; review before any transmitter implementation.
-15. **P1 blocker:** Measure Android head unit KEY1/KEY2 input impedance, reference voltage, common ground and resistor ladder with its documentation and isolated bench setup.
-16. **P1:** Implement autovolume deterministic simulation with manual changes, no-volume-state recovery, reset, loss, hysteresis, bounded increments and all three modes.
+15. **P1 blocker:** Measure Android head unit KEY1/KEY2 and reverse-trigger input impedance, reference voltage, thresholds, current and common ground with its documentation and isolated bench setup.
+16. **P1:** Decode the BCM's relative autovolume offset and selector behavior; then use the deterministic host model to map BCM offset changes to bounded volume-up/down pulses. Manual steering volume remains independent, and the user may trim if a pulse is lost. Test data loss, reset/re-baseline, OFF/LOW/HIGH, repeated transitions and pulse-rate limits. Do not infer absolute head-unit volume.
 17. **P1:** Design serviceable behind-radio adapter harness and output hardware after electrical assumptions are measured.
 18. **Release:** Add CI, static analysis, SPDX/project licensing, hardware review and safety checklist.
 19. **Future bench emulation:** Research whether a CCD TPMS module or sensor emulator can support newer tire-pressure sensors; identify required module role, message set, enrollment behavior, timing and compatibility. Keep all prototype transmission isolated from the vehicle.
+20. **P1:** Design a protected, default-low 12 V high-side output to the Android head unit's reverse-camera trigger from a verified fresh CCD Reverse state. Confirm the signal decoder and output stage on a bench harness; never use the P1 output to drive OEM reverse-lamp wiring.
