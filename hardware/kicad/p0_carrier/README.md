@@ -1,5 +1,7 @@
 # P0 carrier layout study
 
+**Status: superseded.** This artifact predates the decision to capture multiple independent DLC protocol threads. It has no J1962 board connector, power front end, or bus receiver/transmitter circuits. Do not use its PCB, DSN, SES, 3D preview, or schematic PDF as a P0 BOM or fabrication package. The current multi-thread hardware requirements and candidate BOM are in `docs/p0-bom.md`; the old board remains only as a KiCad/FreeRouting workflow example.
+
 This KiCad project is a preliminary carrier for an ESP32-S3-DevKitC-1 and a future protected CCD receiver daughterboard. It is intentionally not a complete transceiver or vehicle-ready design.
 
 ## Layout proposal
