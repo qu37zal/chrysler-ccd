@@ -2,7 +2,7 @@
 
 ## P0 core: genuine passive CCD capture
 
-1. **Blocker:** Extract and cite 1999 Prowler CCD/DLC service pages; confirm J1962 pin 3/11, grounds, and power against the OEM diagram.
+1. **Blocker:** Review the 1999-model pages in the already archived [1997/1999 Prowler service manual](https://drive.google.com/drive/folders/1QMeYXlxrAGIzFMos-1nIWLoNGfmSHnUg). Record exact PDF page/diagram references for the CCD/DLC pin map, grounds, and power, then reconcile the existing page-2216 CCD reference with the scan. Keep other DLC contacts out of the core until their Prowler pages are identified.
 2. **Blocker:** Complete the component-level CCD receive and protected power schematic. Specify input envelope, loading, protection, thresholds, hysteresis, 3.3 V logic, and test points. Do not add bus bias/termination or vehicle-side TX.
 3. **Blocker:** Select a J1962 male edge connector from full mechanical data; create/measure its footprint and prove enclosure fit. The reference project's `OBD2-90` library footprint name is not a part number.
 4. **P0:** Update the KiCad PCB to include the real J1962 edge connector, protected CCD front end, ESP32-S3, USB-C, status/debug points, and protected power. Route using FreeRouting, import the session, review in KiCad, and rerun DRC.
