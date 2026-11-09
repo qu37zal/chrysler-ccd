@@ -1,24 +1,24 @@
-# ADR 0004: P0 independent DLC capture threads
+# ADR 0004: CCD core with extensible DLC capture threads
 
-Status: Accepted as a capture architecture; physical pin assignments and electrical circuits remain provisional pending Prowler-specific validation.
+Status: Accepted. P0 core is CCD-only and receive-only. Other DLC lines and full OBD-II behavior are stretch scope.
 
 ## Decision
 
-P0 shall treat every confirmed data conductor exposed at the J1962 connector as an independent capture thread. Initial candidate groups, based on ChryslerScanner V2.1.0's connector table, are the CCD differential pair (3/11), PCI/VPW (2), and the six SCI conductors (6/7/9/12/14/15). Each conductor or differential pair gets a protocol-specific receive front end and dedicated MCU capture input. Pin numbers and signal names remain candidate metadata until checked against 1999 Prowler service literature and the actual connector.
+P0 core implements receive-only capture of the Prowler CCD differential pair at the J1962 connector. Capture records carry a stable thread ID so independently validated physical layers can be added later. Candidate stretch channels from ChryslerScanner V2.1.0 include PCI/VPW and SCI conductors; these are not assumed populated on the Prowler and receive no P0-core hardware. Full OBD-II pass-through and diagnostic request/reply behavior are also stretch objectives, not gates for the first CCD capture.
 
-The web interface shall provide a tab per thread, with raw and parsed events, channel status, timing, and loss/error counters. A shared timeline permits cross-thread comparison. Capture files preserve thread identity on every event. Independent hardware timestamps/edge inputs prevent unrelated bus activity from being collapsed into one serial stream.
+The first web interface needs a CCD tab with raw and parsed frames, channel status, timing, and loss/error counters. As stretch channels are implemented, each gets its own tab and the shared timeline can compare them. Capture files preserve thread identity from the first release. Independent hardware edge inputs prevent unrelated bus activity from being collapsed into one serial stream.
 
 ## Rationale
 
-One CCD receiver cannot capture single-wire PCI/VPW or SCI electrical signaling. The connector can expose multiple physical layers while not exposing every in-vehicle network. Separate threads preserve signal integrity, protocol timing and source identity and allow later analysis to compare the threads.
+One CCD receiver cannot capture single-wire PCI/VPW or SCI signaling. Preserving distinct thread identity now makes those future extensions straightforward without delaying the first Prowler CCD capture. The DLC may expose only some vehicle traffic; passive capture also cannot elicit replies that are sent only after a diagnostic request.
 
 ## Constraints
 
-- P0 is passive at the vehicle connector. All transmit drivers, if designed for isolated bench experiments, remain unpopulated and behind a normally-open physical inhibit.
+- P0 is passive at the vehicle connector. It has no transmit driver. Future isolated-bench/request-reply stages require separate review and physical inhibit; any vehicle transmission requires explicit user authorization.
 - Do not connect a pin just because it is listed in a generic scanner reference. Confirm it on the Prowler first.
 - Do not connect 12 V-capable lines directly to ESP32 pins. Each interface needs a reviewed input range, protection, loading, threshold and output-level design.
 - No bias or termination on CCD, and no generic shared comparator circuit across protocols.
-- Web tabs filter presentation only; exported raw capture retains all threads and overrun markers.
+- As tabs are added, filtering is presentation-only; exported raw capture retains all enabled threads and overrun markers.
 
 ## Evidence
 
