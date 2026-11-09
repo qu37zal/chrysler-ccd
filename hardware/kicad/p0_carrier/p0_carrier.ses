@@ -1,0 +1,149 @@
+(session "p0_carrier"
+  (base_design "p0_carrier")
+  (placement
+    (resolution um 10)
+    (component "SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
+      (place JP1 190000 -340000 front 90)
+    )
+    (component "PinSocket_1x22_P2.54mm_Vertical"
+      (place J4 260000 -317000 front 90)
+      (place J3 260000 -63000 front 90)
+    )
+    (component "PinHeader_1x06_P2.54mm_Vertical"
+      (place J2 200000 -126500 front 0)
+    )
+    (component "PinHeader_2x08_P2.54mm_Vertical"
+      (place J1 100000 -165000 front 0)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution um 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version "10.0.7")
+    )
+    (library_out 
+      (padstack "Via[0-1]_600:300_um"
+        (shape
+          (circle F.Cu 6000 0 0)
+        )
+        (shape
+          (circle B.Cu 6000 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net "CCD_P_RAW"
+        (wire
+          (path B.Cu 2000
+            200000 -126500
+            188483 -126500
+          )
+        )
+        (wire
+          (path B.Cu 2000
+            100000 -190400
+            113657 -176743
+            138240 -176743
+            188483 -126500
+          )
+        )
+      )
+      (net "CCD_N_RAW"
+        (wire
+          (path B.Cu 2000
+            100000 -292000
+            112700 -279300
+            112700 -237016
+            121216 -228500
+            128998 -228500
+            200000 -157498
+            200000 -151900
+          )
+        )
+      )
+      (net "LOGIC_GND"
+        (wire
+          (path F.Cu 2000
+            302396 -161400
+            286496 -177300
+            200000 -177300
+          )
+        )
+        (wire
+          (path F.Cu 1500
+            793400 -74502
+            389294 -74502
+            302396 -161400
+          )
+        )
+        (wire
+          (path F.Cu 2000
+            793400 -63000
+            793400 -74502
+          )
+        )
+        (wire
+          (path B.Cu 2000
+            200000 -177300
+            187699 -189601
+            187699 -232925
+            195574 -240800
+            204533 -240800
+            260000 -296267
+            260000 -317000
+          )
+        )
+        (wire
+          (path F.Cu 2000
+            260000 -317000
+            206500 -317000
+            190000 -333500
+          )
+        )
+      )
+      (net "3V3"
+        (wire
+          (path B.Cu 2000
+            200000 -202700
+            260000 -142700
+            260000 -63000
+          )
+        )
+      )
+      (net "RX_LOGIC"
+        (wire
+          (path B.Cu 2000
+            200000 -228100
+            336200 -91900
+            336200 -63000
+          )
+        )
+      )
+      (net "DLC_SIGNAL_GND"
+        (wire
+          (path B.Cu 2000
+            100000 -215800
+            88186 -227614
+            88186 -296746
+            96140 -304700
+            136882 -304700
+            177422 -345240
+          )
+        )
+        (wire
+          (path F.Cu 2000
+            177422 -345240
+            188740 -345240
+            190000 -346500
+          )
+        )
+        (via "Via[0-1]_600:300_um" 177422 -345240
+        )
+      )
+    )
+  )
+)

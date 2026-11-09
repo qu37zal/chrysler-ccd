@@ -6,6 +6,8 @@ Review of the supplied comparator/MOSFET/KEY-input BOM notes is recorded in [Gem
 
 The itemized prototype parts and explicit unselected items are tracked in the [P0 preliminary BOM](p0-bom.md).
 
+The current KiCad/FreeRouting work is the [P0 carrier layout study](../hardware/kicad/p0_carrier/README.md). It documents an 88 x 38 mm carrier placeholder for DevKitC v1.1, a J1962 pigtail header, and a protected-receiver mezzanine. The KiCad schematic is an assumption/block page; the receiver and vehicle-power circuits remain unselected. The board is not approved for fabrication or vehicle connection.
+
 | Function | Candidate | Status |
 |---|---|---|
 | MCU | ESP32-S3 module/devkit | Selected platform |
