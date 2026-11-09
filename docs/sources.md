@@ -1,6 +1,10 @@
 # Source inventory
 
-## Additional P0 multi-thread references
+## Vehicle and manual authority
+
+Elvira is a **2000 Plymouth Prowler** (owner correction). The owner has the **paper 2000 factory service manual**, which is the authority for critical model-year details. Use the archived 1997/1999 manual for design and record carryover assumptions explicitly. Consult the 2000 manual for connector cavities/view orientation, CCD polarity, grounds, fused feeds, bus bias/termination and electrical limits as needed for critical decisions. Electrical carryover is the working assumption; a complete comparison of every part and diagram is not required to progress. Saved 2000 radio/audio diagrams are also available in [Factory Pinouts & Manuals](https://drive.google.com/drive/folders/1BQwRT20OZEtsz1-QEHSWGDAH2qj2MX99); their applicability is narrower than the full paper manual. Physical measurements validate the assembled interface independently.
+
+## Archived references
 
 - 1997/1999 Plymouth Prowler factory service manual: already archived in Google Drive under [Reference Manuals](https://drive.google.com/drive/folders/1QMeYXlxrAGIzFMos-1nIWLoNGfmSHnUg). The original `97-99PlymouthProwler.pdf` is preserved as `97-99PlymouthProwler-original.zip.001` and `.002`; the adjacent `READ_FIRST-Archive-and-Lamp-Wiring.txt` documents reconstruction, 1,403-page count, checksum, and integrity checks. Consult the 1999-model pages for vehicle-specific diagrams before treating related-year or generic scanner pin maps as verified.
 - Specific 1999 Prowler CCD bus page: https://workshop-manuals.com/plymouth/prowler/v6-3.5l_vin_g/powertrain_management/computers_and_control_systems/information_bus/component_information/diagrams/page_2216/ . This is also cited in the local table below; the page describes the Prowler CCD network and its twisted pair. Use the archived factory scan for detailed wiring/pin interpretation.
@@ -49,4 +53,4 @@ Project: [qu37zal/chrysler-ccd](https://github.com/qu37zal/chrysler-ccd). Availa
 | sigrok CCD decoder | https://github.com/majekw/sigrok-ccd-pd | Decoder covers subset, mostly Jeep ZJ '98; not Prowler validated | License/hash pending |
 | Operation CHARM | https://www.operationcharm.com/ | Service literature access; model-year/manual access to verify | Pending |
 
-The 1999 service manual is already present in the Drive archive linked above. Its Prowler CCD page and diagrams are the primary reference for the core hardware. The repository still needs to record exact scan/page identifiers for the DLC contact drawing and relevant 1999 wiring sheets in the signal dictionary; use the generic ChryslerScanner/Snap-on pin maps only as cross-checks. The separate SCI/PCI contacts remain stretch-scope candidates until the archived Prowler pages confirm them.
+The 1999 service manual is already present in the Drive archive linked above. Its Prowler CCD page and diagrams are the working design reference for the core hardware; applicability to Elvira (2000) is a carryover assumption until critical details are checked against the paper 2000 factory manual. The repository still needs to record exact scan/page identifiers for the DLC contact drawing and relevant 1999 wiring sheets in the signal dictionary; use the generic ChryslerScanner/Snap-on pin maps only as cross-checks. The separate SCI/PCI contacts remain stretch-scope candidates until the archived Prowler pages confirm them.
