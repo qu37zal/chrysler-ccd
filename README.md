@@ -13,7 +13,8 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 - `host`: Python capture parser, deterministic analysis/replay tools and a host-side relative autovolume controller model.
 - `tests`, `fixtures`: synthetic-only protocol and analysis tests/captures.
 - `docs`: requirements, safety procedures, architecture decisions, source inventory and hardware notes.
-- `hardware`: preliminary interface notes and BOM; no production PCB pending verification.
+- `hardware/kicad/p0_carrier`: editable KiCad block schematic and routed carrier layout study for the ESP32-S3-DevKitC-1, J1962 pigtail header and future protected CCD receiver mezzanine. This is not a complete electrical interface or vehicle-ready PCB.
+- `docs`: requirements, safety procedures, architecture decisions, source inventory and hardware notes.
 
 ## Milestones
 
