@@ -2,6 +2,8 @@
 
 No final PCB artwork until bus loading, transceiver compatibility and exact connector details are verified.
 
+Review of the supplied comparator/MOSFET/KEY-input BOM notes is recorded in [Gemini discrete CCD BOM review](reviews/gemini-discrete-ccd-bom-review.md). Those notes are a hypothesis list, not a build-ready design.
+
 | Function | Candidate | Status |
 |---|---|---|
 | MCU | ESP32-S3 module/devkit | Selected platform |
