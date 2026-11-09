@@ -4,6 +4,8 @@ No final PCB artwork until bus loading, transceiver compatibility and exact conn
 
 Review of the supplied comparator/MOSFET/KEY-input BOM notes is recorded in [Gemini discrete CCD BOM review](reviews/gemini-discrete-ccd-bom-review.md). Those notes are a hypothesis list, not a build-ready design.
 
+The itemized prototype parts and explicit unselected items are tracked in the [P0 preliminary BOM](p0-bom.md).
+
 | Function | Candidate | Status |
 |---|---|---|
 | MCU | ESP32-S3 module/devkit | Selected platform |
@@ -13,13 +15,13 @@ Review of the supplied comparator/MOSFET/KEY-input BOM notes is recorded in [Gem
 | CCD interface development board | Chrysler Scanner CCDBusTransceiver V1.03, part BC-002103 | Candidate receiver/transmitter board; datasheet specifies 5 V UART and selectable bus bias/termination. Not ESP32-ready without level adaptation and confirmed TX disable; current sales availability unverified. |
 | P0 receiver-only front end | High-impedance differential comparator/receiver with input protection and 3.3 V output | Preferred direction pending schematic review and bench validation. Do not populate transmitter, bias, or termination for initial vehicle capture. |
 | Bus protection | Series impedance and low-capacitance automotive-rated protection selected from transceiver limits | Not selected; needs measured bus envelope and load budget |
-| OBD | Reversible breakout; CCD candidate at DLC 3/11; grounds 4/5; protected supply 16; survey all populated signal pins | Prowler-specific pin map required; no connection yet |
-| OBD enclosure connector | Automotive 16-pin J1962 male plug with fully wired 16-pin female pass-through | Preserve straight-through continuity for all pins and add only high-impedance monitoring taps. Verify there are no shorts, cross-connects, or monitor loading on unrelated pins. |
+| OBD | J1962 male plug; CCD candidate at DLC 3/11; grounds 4/5; protected supply 16; survey all populated signal pins | Plug-in P0 dongle concept; Prowler-specific pin map required before wiring |
+| OBD enclosure connector | J1962 male plug at vehicle end | Full 16-contact connector; only verified diagnostic lines receive high-impedance protected taps |
 | Power | Automotive input protection, reverse polarity, surge suppression, buck to 5V/3V3 | Design pending crank/transient requirements |
 | P1 reverse-camera trigger | Protected automotive high-side switch, e.g. TI TPS1H200A-Q1 | Study candidate only. ACTIVE, AEC-Q100, 3.4–40 V supply, protected switch. Confirm Android trigger input voltage/current and fault behavior before choosing current limit, series protection or schematic. Output defaults low. Not part of receive-only P0. |
 | Debug | USB-C, status LEDs, test points for bus+/-, receiver output, 3V3 and ground | Preliminary |
 
-Power-up must default to receiver-only; omit TX path and bus bias/termination. Isolate MCU ground and vehicle ground only per verified design. Validate bus input loading on a bench before vehicle connection. The enclosure should expose a fully wired/pass-through OBD-II connection while the sniffer monitors CCD at DLC pins 3 and 11. Establish exact connector/passthrough semantics and all-pin behavior before mechanical design.
+Power-up must default to receiver-only; omit TX path and bus bias/termination. Isolate MCU ground and vehicle ground only per verified design. Validate bus input loading on a bench before vehicle connection. The enclosure uses a J1962 male vehicle plug and USB-C at the opposite end. The 16 contacts are present, but only confirmed lines are monitored; no female pass-through connector is included in this packaging concept.
 
 ## Network and interaction scope
 
@@ -29,7 +31,7 @@ P0 captures are expected to support P1 discovery of BCM volume-offset levels, ve
 
 ## Enclosure requirements
 
-Design for a compact, strain-relieved 3D printed housing with an automotive-grade J1962 male plug to the vehicle and a fully wired 16-pin J1962 female pass-through socket for a scan tool. Preserve all 16 pin-to-pin connections. Route each monitored channel as a high-impedance tap with independent protection and no driver path. Include access to USB, visible status indication, reset/recovery access, secure fasteners, and an internal retention feature for the ESP32 and interface board. Do not finalize CAD until connector dimensions, cable exit/bend radius, fuse/protection components, and board stack are measured.
+Design for a compact, serviceable 3D-printed dongle with a J1962 male plug at the vehicle end and USB-C at the opposite end. A female scan-tool pass-through is not included in this packaging concept. Route only confirmed diagnostic lines to high-impedance, independently protected receive front ends; do not assume the other J1962 contacts are covered. Include visible status indication, reset/recovery access, secure fasteners, and internal retention for the ESP32 and interface board. Do not finalize CAD until connector dimensions, USB clearances, power protection, and board stack are measured.
 
 ## Ordering recommendation
 
