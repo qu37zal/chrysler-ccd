@@ -8,7 +8,7 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 
 ## Layout
 
-- `firmware/p0-sniffer`: ESP32-S3 PlatformIO application scaffold.
+- `firmware/p0-sniffer`: ESP32-S3 PlatformIO application scaffold; intended to host a local Wi-Fi AP and browser GUI.
 - `lib/ccd`: transport-independent CCD frame and checksum/parser logic.
 - `host`: Python capture parser, deterministic analysis and replay tools.
 - `tests`, `fixtures`: synthetic-only protocol and analysis tests/captures.
@@ -17,13 +17,13 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 
 ## Milestones
 
-1. **P0:** Genuine timestamped passive capture; validated framing; signal dictionary backed by Prowler documentation and controlled stationary tests.
+1. **P0:** Capture every frame visible on the vehicle's CCD pair at the OBD-II DLC, with timestamps and error/loss metadata, then serve local status and logs over a device Wi-Fi AP/web GUI. This means all traffic observable on that pair, not every network or private module link in the vehicle.
 2. **Bench emulation:** isolated virtual network and reviewed module behavior; no vehicle transmission without explicit owner authorization.
 3. **P1:** adapter-harness controller mapping CCD events to validated resistor-multiplexed head-unit input, with bounded autovolume state machine.
 
 ## Host tooling
 
-Python 3.10+; run `python -m unittest discover -s tests -v`. Synthetic fixture data is explicitly labeled and is not Prowler traffic.
+Python 3.10+; run `python -m unittest discover -s tests -v`. Synthetic fixture data is explicitly labeled and is not Prowler traffic. Bluetooth and a native iOS app are later possibilities and are outside initial scope.
 
 ## Firmware
 

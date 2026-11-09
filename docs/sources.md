@@ -4,8 +4,11 @@ Project: [qu37zal/chrysler-ccd](https://github.com/qu37zal/chrysler-ccd). Availa
 
 | Source | URL | Relevance / status | License/hash |
 |---|---|---|---|
+| CDP68HC68S1 datasheet | https://cdck-file-uploads-global.s3.dualstack.us-west-2.amazonaws.com/digikey/original/3X/9/a/9afb0757f38bce6dab4464e1de7951e5701185da.PDF | Serial Bus Interface Chip; 14-pin PDIP CDP68HC68S1E and 20-pin SOIC CDP68HC68S1M, 4–7 V supply, 7812.5 bit/s typical | Intersil datasheet, April 1994 |
 | ChryslerScanner | https://github.com/laszlodaniel/ChryslerScanner | User-named repo; upstream URL may redirect/rename; audit needed | Pending |
 | CCDBusTransceiver | https://github.com/laszlodaniel/CCDBusTransceiver | Hardware/transceiver implementation; inspect schematic before selection | Pending |
+| CCDBusTransceiver V1.03 datasheet | https://d3s5r33r268y59.cloudfront.net/datasheets/20980/2020-08-06-10-15-14/CCDBusTransceiver_V103_datasheet.pdf | Part BC-002103; 7812.5 baud; 5 V UART; bias/termination selectable. Not direct ESP32 compatible. | GPL-3.0 project; PDF hash pending |
+| CCD transceiver redesign notes | https://chryslerccdsci.wordpress.com/2020/03/22/re-designing-the-ccd-bus-transceiver-chip/ | Explains obsolete IC replacement circuits, receiver comparator, and software responsibilities lost when not using original SBIC | Technical article; reference only |
 | CCDLibrary | https://github.com/laszlodaniel/CCDLibrary | Framing/checksum reference; no code copied | Pending |
 | CCDPCIBusTransceiver | https://github.com/laszlodaniel/CCDPCIBusTransceiver | Dual physical-layer project; keep CCD/PCI separated | Pending |
 | J1850VPWCore | https://github.com/laszlodaniel/J1850VPWCore | VPW is distinct from CCD; reference only | Pending |
