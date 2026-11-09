@@ -3,7 +3,7 @@
 1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for every DLC cavity, radio connector, BCM and speed-sensitive selector; determine whether separate SCI/other diagnostic signals are populated and record each layer/pin. Capture page references and license/access terms.
 2. **P0 blocker:** Inspect parts-bin inventory and select a 3.3 V receive-only CCD front end with verified input protection and loading. Decide between a comparator circuit and documented transceiver board after checking component availability; do not order obsolete CDP68HC68S1E as the default.
 3. **P0 blocker:** Audit upstream repositories at exact commit hashes; record licenses, protocol assumptions and reusable algorithms. Resolve project license before reuse.
-4. **P0 blocker:** Design a protected automotive power input and physically transmit-inhibited receiver; verify no TX, bus bias, or termination connection to vehicle.
+4. **P0 blocker:** Design protected automotive power and a modular CCD front end: validated receiver plus reserved, unpopulated differential transmitter section. Keep TX physically disconnected and hardware-inhibited by default; no bus bias or termination. Define the isolated-bench TX validation and arbitration/fault review as a later gate.
 5. **P0:** Implement hardware UART/RMT receive framing with microsecond timestamp and overflow accounting; capture raw bytes and checksum status.
 6. **P0:** Validate interface against isolated CCD signal source and logic analyzer, including reversed polarity, malformed data, disconnect and MCU reset.
 7. **P0:** Expand host replay fixtures and frame parser using independently sourced checksum/framing specification.
@@ -18,3 +18,4 @@
 16. **P1:** Implement autovolume deterministic simulation with manual changes, no-volume-state recovery, reset, loss, hysteresis, bounded increments and all three modes.
 17. **P1:** Design serviceable behind-radio adapter harness and output hardware after electrical assumptions are measured.
 18. **Release:** Add CI, static analysis, SPDX/project licensing, hardware review and safety checklist.
+19. **Future bench emulation:** Research whether a CCD TPMS module or sensor emulator can support newer tire-pressure sensors; identify required module role, message set, enrollment behavior, timing and compatibility. Keep all prototype transmission isolated from the vehicle.

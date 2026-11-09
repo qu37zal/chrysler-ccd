@@ -18,16 +18,16 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 ## Milestones
 
 1. **P0:** Capture every frame visible on the vehicle's CCD pair at the OBD-II DLC, with timestamps and error/loss metadata, then serve local status and logs over a device Wi-Fi AP/web GUI. This means all traffic observable on that pair, not every network or private module link in the vehicle.
-2. **Bench emulation:** isolated virtual network and reviewed module behavior; no vehicle transmission without explicit owner authorization.
+2. **Bench emulation:** isolated virtual network and reviewed module behavior, with a reusable module-emulation interface. Initial candidates are OEM radio behavior and future CCD TPMS module/sensor emulation for newer sensors; each requires protocol discovery and isolated-bench validation. No vehicle transmission without explicit owner authorization.
 3. **P1:** adapter-harness controller mapping CCD events to validated resistor-multiplexed head-unit input, with bounded autovolume state machine.
 
 ## Host tooling
 
-Python 3.10+; run `python -m unittest discover -s tests -v`. Synthetic fixture data is explicitly labeled and is not Prowler traffic. Bluetooth and a native iOS app are later possibilities and are outside initial scope.
+Python 3.10+; run `python -m unittest discover -s tests -v`. Synthetic fixture data is explicitly labeled and is not Prowler traffic. P0 includes a local Wi-Fi access point and browser GUI; Bluetooth and a native iOS app are later possibilities and are outside initial scope.
 
 ## Firmware
 
-Build with PlatformIO (`pio run -d firmware/p0-sniffer`). Initial target is ESP32-S3 with a qualified CCD transceiver receiver output; exact component, pinout and bus load remain open hardware decisions. USB serial is primary; wireless telemetry is deferred until capture integrity is established.
+Build with PlatformIO (`pio run -d firmware/p0-sniffer`). Initial target is ESP32-S3 with a supported discrete CCD receiver and a future-capable, separate transmitter section kept unpopulated and physically inhibited in P0. Exact component selection, protection, pinout and bus loading remain open hardware decisions. USB serial and local AP/web capture interface are planned P0 transports.
 
 ## License
 
