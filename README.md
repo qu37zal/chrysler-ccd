@@ -10,7 +10,7 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 
 - `firmware/p0-sniffer`: ESP32-S3 PlatformIO application scaffold; intended to host a local Wi-Fi AP and browser GUI.
 - `lib/ccd`: transport-independent CCD frame and checksum/parser logic.
-- `host`: Python capture parser, deterministic analysis and replay tools.
+- `host`: Python capture parser, deterministic analysis/replay tools and a host-side relative autovolume controller model.
 - `tests`, `fixtures`: synthetic-only protocol and analysis tests/captures.
 - `docs`: requirements, safety procedures, architecture decisions, source inventory and hardware notes.
 - `hardware`: preliminary interface notes and BOM; no production PCB pending verification.
@@ -19,7 +19,7 @@ This repository contains no authorized vehicle-bus transmitter. The firmware sca
 
 1. **P0:** Capture every frame visible on the vehicle's CCD pair at the OBD-II DLC, with timestamps and error/loss metadata, then serve local status and logs over a device Wi-Fi AP/web GUI. This means all traffic observable on that pair, not every network or private module link in the vehicle.
 2. **Bench emulation:** isolated virtual network and reviewed module behavior, with a reusable module-emulation interface. Initial candidates are OEM radio behavior and future CCD TPMS module/sensor emulation for newer sensors; each requires protocol discovery and isolated-bench validation. No vehicle transmission without explicit owner authorization.
-3. **P1:** adapter-harness controller mapping CCD events to validated resistor-multiplexed head-unit input, with bounded autovolume state machine.
+3. **P1:** adapter-harness controller mapping validated BCM autovolume offset changes and steering events to measured resistor-multiplexed head-unit inputs, and decoded Reverse range to a protected 12 V camera-trigger output. The model sends relative volume steps; absolute head-unit volume is neither observed nor required. P0 remains the passive capture tool used to discover these signals.
 
 ## Host tooling
 
