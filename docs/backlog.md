@@ -1,23 +1,31 @@
 # Prioritized backlog
 
-1. **P0 blocker:** Obtain Prowler 1999 OEM wiring/service pages for every DLC cavity, radio connector, BCM and speed-sensitive selector; determine whether CCD, PCI/VPW and individual SCI lines are populated and record each layer/pin. Capture page references and license/access terms.
-2. **P0 blocker:** Design and review separate protected receiver circuits for CCD differential, VPW/PCI, and every confirmed SCI conductor. No generic/shared interface; establish each electrical range, threshold, hysteresis, loading and MCU output level.
-3. **P0 blocker:** Audit upstream repositories at exact commit hashes; record licenses, protocol assumptions and reusable algorithms. Resolve project license before reuse.
-4. **P0 blocker:** Select protected power and board-edge J1962 connector from full manufacturer data. Verify connector footprint against the physical part; the upstream `OBD2-90` library name does not identify a vendor part.
-5. **P0 blocker:** If transmitter circuitry is retained for isolated bench work, use independent protocol-specific stages, normally-open physical inhibits, and DNP components in P0. No bus bias or termination. Complete topology/arbitration/fault review before population; no vehicle transmission.
-6. **P0:** Implement independent edge capture threads with microsecond timestamps and overflow accounting; preserve thread ID and raw activity through capture export.
-7. **P0:** Validate each distinct interface against isolated signal sources and logic analyzer, including polarity, malformed data, disconnect and MCU reset.
-7. **P0:** Expand host replay fixtures and frame parser using independently sourced checksum/framing specification.
-9. **P0:** Implement local Wi-Fi AP and browser interface with a tab per protocol/thread, combined timeline, live per-thread counters, and downloadable capture format; no cloud dependency.
-9. **P0:** Mechanically define enclosure and OBD J1962 male/female pass-through semantics, pin continuity and strain relief before CAD/printing.
-10. **P0:** Implement stationary event annotation and deterministic capture correlation report; preserve full provenance.
-11. **P0:** First genuine Prowler capture only after steps 1–6; use passive receiver(s) on verified DLC pins, stationary vehicle, no scan-tool transmission.
-12. **P0:** Verify vehicle speed, steering controls, autovolume offset, selector, transmission range (especially Reverse), and lighting associations with repeated controlled stationary or safe offline captures. P0 collects signals passively for later P1 use.
-13. **Later:** Bluetooth and native iOS app, after P0 capture integrity and local web UX are established.
-14. **Bench emulation:** Establish isolated virtual CCD bus and OEM radio request/response/periodic behavior; review before any transmitter implementation.
-15. **P1 blocker:** Measure Android head unit KEY1/KEY2 and reverse-trigger input impedance, reference voltage, thresholds, current and common ground with its documentation and isolated bench setup.
-16. **P1:** Decode the BCM's relative autovolume offset and selector behavior; then use the deterministic host model to map BCM offset changes to bounded volume-up/down pulses. Manual steering volume remains independent, and the user may trim if a pulse is lost. Test data loss, reset/re-baseline, OFF/LOW/HIGH, repeated transitions and pulse-rate limits. Do not infer absolute head-unit volume.
-17. **P1:** Design serviceable behind-radio adapter harness and output hardware after electrical assumptions are measured.
-18. **Release:** Add CI, static analysis, SPDX/project licensing, hardware review and safety checklist.
-19. **Future bench emulation:** Research whether a CCD TPMS module or sensor emulator can support newer tire-pressure sensors; identify required module role, message set, enrollment behavior, timing and compatibility. Keep all prototype transmission isolated from the vehicle.
-20. **P1:** Design a protected, default-low 12 V high-side output to the Android head unit's reverse-camera trigger from a verified fresh CCD Reverse state. Confirm the signal decoder and output stage on a bench harness; never use the P1 output to drive OEM reverse-lamp wiring.
+## P0 core: genuine passive CCD capture
+
+1. **Blocker:** Extract and cite 1999 Prowler CCD/DLC service pages; confirm J1962 pin 3/11, grounds, and power against the OEM diagram.
+2. **Blocker:** Complete the component-level CCD receive and protected power schematic. Specify input envelope, loading, protection, thresholds, hysteresis, 3.3 V logic, and test points. Do not add bus bias/termination or vehicle-side TX.
+3. **Blocker:** Select a J1962 male edge connector from full mechanical data; create/measure its footprint and prove enclosure fit. The reference project's `OBD2-90` library footprint name is not a part number.
+4. **P0:** Update the KiCad PCB to include the real J1962 edge connector, protected CCD front end, ESP32-S3, USB-C, status/debug points, and protected power. Route using FreeRouting, import the session, review in KiCad, and rerun DRC.
+5. **P0:** Validate the receiver and power chain on an isolated bench: waveform levels, polarity, input loading, timestamp fidelity, startup/reset/disconnect and error recovery. Keep physical TX absent.
+6. **P0:** Implement ESP32-S3 capture with bounded queues, microsecond monotonic timestamps, raw frames/checksum/error/drop metadata, USB serial export and device version reporting.
+7. **P0:** Implement local Wi-Fi AP and a CCD capture/status web view with downloadable raw capture. Keep the capture record schema extensible with thread identity.
+8. **P0:** First genuine Prowler CCD capture only after steps 1-7; stationary setup, receive-only, no scan-tool queries.
+9. **P0:** Decode and correlate vehicle speed, BCM volume offset, steering events, selector, transmission range (especially Reverse), and lighting using repeated stationary or later offline captures.
+
+## P0 stretch: more DLC lines and full OBD-II behavior
+
+10. Verify which PCI/VPW and SCI lines are populated on this Prowler from OEM documentation/inspection; never infer from another Chrysler model.
+11. Add separate protocol-specific receive channels and web tabs for confirmed additional DLC lines. Preserve independent timestamps and loss counters.
+12. Decide whether to add a transparent 16-contact pass-through connector for use with a scan tool during logging. Verify continuity and prove that the passive taps do not materially load the bus.
+13. Implement reviewed diagnostic request/reply capture on an isolated network first. It is outside P0 core. Any vehicle-side transmission requires electrical/arbitration/failure review, passing bench tests, and explicit owner authorization.
+
+## Platform and future milestones
+
+14. Audit upstream repositories at exact commit hashes, record licenses and protocol assumptions, and resolve project licensing before any code/artwork reuse.
+15. Establish isolated virtual CCD network and replay harness, then review OEM radio periodic/request-response behavior and module emulation.
+16. Research CCD TPMS module/sensor emulation for newer sensors; establish message set, enrollment behavior, timing and compatibility on an isolated network.
+17. **P1 blocker:** Measure Android head-unit KEY1/KEY2 and reverse-trigger input voltage, impedance, resistor ladder, timing, current and ground assumptions.
+18. **P1:** Map validated BCM autovolume offset changes to bounded relative volume-up/down pulses; preserve manual steering volume, handle resets/data loss, and prevent command storms. Do not estimate absolute head-unit volume.
+19. **P1:** Design a serviceable behind-radio adapter harness and electrically safe resistor-command output stage after head-unit measurements.
+20. **P1:** Decode transmission range and drive the Android unit's reverse-camera input with a protected, default-low 12 V output. Never drive OEM reverse-lamp wiring.
+21. Add CI, static analysis, SPDX/project licensing, hardware review, safety procedures and release checks.

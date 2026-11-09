@@ -1,12 +1,13 @@
 # Requirements and acceptance criteria
 
 ## P0
-- Passive receiver threads for every verified, populated data conductor at the DLC: CCD pair, PCI/VPW, and separate SCI lines where present. Each thread must have an independent receive front end, edge timestamp source, loss counter, raw capture and UI tab.
-- Keep CCD, PCI/VPW, and each SCI line electrically separate. No bus bias or termination. Any future transmit driver has a separate, normally-open physical inhibit and remains unpopulated in the P0 vehicle-capture assembly.
-- Verify candidate DLC pin mappings and each interface's electrical envelope from 1999 Prowler service information and isolated bench measurement before vehicle hookup.
+- **Core:** receive-only capture of the verified Prowler CCD pair through the OBD-II DLC, with genuine timestamps, raw frames, checksum/error status, loss counters, USB export, and local Wi-Fi status/capture UI.
+- Keep the P0 vehicle interface receive-only. Do not fit or enable transmit drivers, add bus bias, or add termination.
+- **Stretch:** separately protected receive channels for other confirmed DLC lines, a full J1962 pass-through logger, and diagnostic request/reply capture. These are not required for first CCD capture. Each additional physical layer must have its own verified front end; no generic/shared interface.
+- Verify the Prowler CCD pin mapping and electrical envelope from vehicle-specific service information and isolated bench measurement before vehicle hookup. Confirm any additional pins independently before adding them.
 - Monotonic microsecond timestamp, raw bytes, checksum/framing status and loss counters exported over USB.
 - Bounded buffering; watchdog-safe recovery; firmware build reproducible in PlatformIO.
-- Web UI provides a tab per protocol/thread and a shared cross-thread timeline with thread-level filters. The tabs must not conceal dropped samples or synthetic provenance.
+- Core web UI shows CCD capture/status. When stretch channels are implemented, show one tab per enabled thread and a combined timeline; filtering must not conceal dropped samples or synthetic provenance.
 - Host parser accepts documented JSONL, rejects malformed input, and clearly preserves synthetic provenance.
 
 ## P1
